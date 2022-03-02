@@ -1,10 +1,12 @@
 <template>
   <div :class="$vuetify.breakpoint.smAndDown ? '' : 'd-flex align-center flex-column'">
-    <img
-        src="@/assets/logo.png"
-        height="128px"
-        class="my-7"
-    />
+    <div class="d-flex justify-center">
+      <img
+          src="@/assets/logo.png"
+          height="128px"
+          class="my-7"
+      />
+    </div>
     <v-form ref="form" :v-model="true" lazy-validation :style="$vuetify.breakpoint.smAndDown ? '' : 'width: 50%'">
       <v-text-field
           v-model="user.email"
@@ -33,15 +35,17 @@
     </v-form>
     <v-row :style="$vuetify.breakpoint.smAndDown ? '' : 'width: 52%'">
       <v-col cols="6">
-        <v-btn large block tile @click="login">登录</v-btn>
+        <v-btn large block tile @click="$router.push('/login')">登录</v-btn>
       </v-col>
       <v-col cols="6">
-        <v-btn large block tile @click="reg" outlined>注册</v-btn>
+        <v-btn large block tile @click="reg" outlined :disabled="disabled">注册</v-btn>
       </v-col>
     </v-row>
   </div>
 </template>
 <script>
+import {apiRegister} from "@/plugins/axios";
+
 export default {
   data() {
     return {
@@ -60,27 +64,28 @@ export default {
         v => !!v || '请再次输入密码',
         v => v === this.user.password || '这都能写错? ',
       ],
-      password: ''
+      password: '',
+      disabled: false
     }
   },
   methods:{
-    login(){
-      this.$router.push('/login')
-    },
     reg(){
       if(this.$refs.form.validate()) {
-        this.axios.post('Auth', this.user).then((response) => {
-          if(response.data.code){
+        this.disabled = true
+        this.$notify('少女折寿中...')
+        apiRegister(this.user).then((resp) => {
+          console.log(resp)
+          if(resp.code){
             this.$notify({type: 's', text: '注册成功，自动跳转中...'})
-            this.$store.dispatch('user/load', response.data)
-            // todo: jump
+            this.$store.dispatch('user/load', resp.data)
+            this.$router.push("/")
           }else{
-            console.log(response.data.message)
-            this.$notify({type: 'i', title: '注册失败', text: response.data.message})
+            this.$notify({title: '注册失败', text: resp.message})
           }
+          this.disabled = false
         })
       }else{
-        this.$notify({type: 'i', title: '提示', text: '填写的信息不对啊'})
+        this.$notify({title: '提示', text: '填写的信息不对啊'})
       }
     }
   }

@@ -1,24 +1,19 @@
 const user = {
 	namespaced: true,
 	state: {
-		token: '',
 		isLogin: false
 	},
 	mutations: {
 		Load(state, data) {
-			state.token = data
-			state.isLogin = true
-		},
-		Cache(state, data){
 			for(let k in data){
 				state[k] = data[k]
 			}
+			state.isLogin = true
 		},
 		Exit(state){
 			for(let k in state){
 				state[k] = 0
 			}
-			state.isLogin = false
 		},
 	},
 	actions: {
@@ -27,9 +22,6 @@ const user = {
 		},
 		exit(context) {
 			context.commit('Exit')
-		},
-		cache(context, data){
-			context.commit('Cache', data)
 		},
 	}
 }
