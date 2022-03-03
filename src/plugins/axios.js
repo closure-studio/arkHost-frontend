@@ -25,8 +25,21 @@ function get(url) {
 		})
 	})
 }
+function del(url, params) {
+	return new Promise((resolve) => {
+		axios.delete(url, {data:params}).then(res => {
+			resolve(res)
+		})
+	})
+}
 export default axios
 export const apiRegister = params => post('Auth', params) // Register
 export const apiLogin = params => get(`Auth/${params}`) // Login
 export const apiCron = () => get('Nodes') // Cron
-export const apiAnnounce = () => get('System/Announcement') // Cron
+export const apiAnnounce = () => get('System/Announcement') // Announce
+export const apiAddGame = params => post('Game', params) // Game
+export const apiGameLogin = params => post('Game/Login', params) // Game
+export const apiListGame = () => get('Game') // GameList
+export const apiDelGame = params => del('Game', params) // Del
+export const apiScreen = (account, platform) => get(`Game/Screenshot/${account}/${platform}`) // GetScreen
+export const apiDetails = (account, platform) => get(`Game/${account}/${platform}`) // GetDetails

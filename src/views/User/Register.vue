@@ -78,7 +78,7 @@ export default {
           if(resp.code){
             this.$notify({type: 's', text: '注册成功，自动跳转中...'})
             this.$store.dispatch('user/load', resp.data)
-            this.$router.push("/")
+            this.$router.push("/dashboard")
           }else{
             this.$notify({title: '注册失败', text: resp.message})
           }

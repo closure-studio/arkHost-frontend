@@ -16,16 +16,11 @@
             内存占用：{{(k['memory']['available'] / k['memory']['total'] * 100).toFixed(2)}}%
             <v-progress-linear :value="(k['memory']['available'] / k['memory']['total'] * 100).toFixed(2)" class="mt-1"></v-progress-linear>
           </div>
-          <v-overlay :absolute="true" :value="overlay">
-            <v-progress-circular
-              indeterminate
-              size="64"
-            ></v-progress-circular>
-          </v-overlay>
+          <Loading :overlay="overlay"/>
         </v-card>
 
       </v-col>
-      <v-col class="pt-0">
+      <v-col class="pt-0" cols="12">
         <v-btn block tile large @click="load" :disabled="overlay">{{ overlay ? '请稍等' : '更新数据' }}</v-btn>
       </v-col>
     </v-row>
@@ -34,7 +29,9 @@
 </template>
 <script>
   import {apiCron} from "@/plugins/axios";
+  import Loading from "@/components/Common/Loading";
   export default {
+    components: {Loading},
     data: () => ({
       server: [],
       overlay: false

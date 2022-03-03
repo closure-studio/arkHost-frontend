@@ -4,7 +4,7 @@
 			<v-navigation-drawer v-model="drawer" :mini-variant="mini ? !hover : false" app :clipped="true" width="250">
 				<v-list-item-group v-model="selectedItem">
 					<v-list nav dense shaped>
-						<v-list-item @click="$router.push('/').catch(err => {})">
+						<v-list-item @click="$router.push('/dashboard').catch(err => {})">
 							<v-list-item-icon>
 								<v-icon>mdi-home</v-icon>
 							</v-list-item-icon>
@@ -16,9 +16,9 @@
 									<v-list-item-title>托管列表</v-list-item-title>
 								</v-list-item-content>
 							</template>
-							<v-list-item @click="$router.push('/account/'+ k.id).catch(err => {})" v-for="k in user.col">
+							<v-list-item @click="$router.push({name:'账号详情', params: {account: k.config.account, platform: k.config.platform}}).catch(err => {})" v-for="k in list">
 								<v-list-item-content>
-									<v-list-item-title>{{k.name}}</v-list-item-title>
+									<v-list-item-title>{{k.config.account.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}}</v-list-item-title>
 								</v-list-item-content>
 							</v-list-item>
 						</v-list-group>
@@ -96,9 +96,10 @@
             mdi-cube-outline
           </v-icon>当前版本: 114514</v-chip>
         </v-card>
-				<router-view />
+				<router-view @alert="alert"/>
 			</v-container>
       <notice
+          ref="notice"
           :visible.sync="showNotice"
           :title="title"
           @close="showNotice = false"
@@ -109,6 +110,7 @@
 </template>
 <script>
   import Notice from "@/components/Common/Alert";
+  import {apiListGame} from "@/plugins/axios";
 	export default {
     components: {
       Notice
@@ -119,6 +121,7 @@
       showNotice: false,
       title: '',
       subNotice: '',
+      list: []
 		}),
 		computed:{
       items(){
@@ -164,21 +167,31 @@
         this.$router.push('/register').catch(err => {})
       },
 			logout(){
-        this.showNotice = true
-        this.title = "真的要退出吗？"
-        this.subNotice = () => {
+        this.alert('真的要退出吗?', () => {
           this.showNotice = false
           this.$notify({type:'s', text: '你已安全退出'})
           this.$store.dispatch("user/exit")
-        }
+        })
+      },
+      alert(title, func){
+        this.showNotice = true
+        this.title = title
+        this.subNotice = func
       }
 		},
-		created() {
-      if(this.user.isLogin){
+		async created() {
+      if (this.user.isLogin) {
         this.axios.defaults.headers['Authorization'] = this.user.token
-      }else{
+        await apiListGame().then((resp) => {
+          if (resp.code) {
+            this.list = resp.data
+          } else {
+            this.$notify({type: 'w', title: '获取托管信息失败', text: resp.message})
+          }
+        })
+      } else {
         this.$notify('还没登录呢')
       }
-		}
+    }
 	}
 </script>

@@ -35,3 +35,6 @@
 a {
     color: #fff!important;
 }
+td, th {
+    white-space: nowrap !important;
+}

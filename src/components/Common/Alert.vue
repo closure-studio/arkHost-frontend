@@ -23,21 +23,21 @@
       visible: {type: Boolean},
       title: {type: String},
     },
-	computed:{
-		show: {
-			set(v){
-				this.$emit('close', v)
-			},
-			get(){
-				return this.visible
-			}
-		},
-	},
-	methods:{
-		submit(){
-			this.show = false
-			this.$emit('submit', true)
-		}
-	}
+    computed:{
+      show: {
+        set(v){
+          this.$emit('close', v)
+        },
+        get(){
+          return this.visible
+        }
+      },
+    },
+    methods:{
+      submit(){
+        this.show = false
+        this.$emit('submit', true)
+      }
+    }
   }
 </script>
