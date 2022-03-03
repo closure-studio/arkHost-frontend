@@ -13,8 +13,8 @@
             CPU占用：{{k['cpu'].toFixed(2)}}%<br>
             上线时间：<span class="text--secondary">{{formatDate(k['boot_UTCTime'], true)}}</span><br>
             最近更新：<span class="text--secondary">{{formatDate(k['update_UTCTime'], true)}}</span><br>
-            内存占用：{{(k['memory']['available'] / k['memory']['total'] * 100).toFixed(2)}}%
-            <v-progress-linear :value="(k['memory']['available'] / k['memory']['total'] * 100).toFixed(2)" class="mt-1"></v-progress-linear>
+            内存占用：{{(100 - k['memory']['available'] / k['memory']['total'] * 100).toFixed(2)}}%
+            <v-progress-linear :value="(100 - k['memory']['available'] / k['memory']['total'] * 100).toFixed(2)" class="mt-1"></v-progress-linear>
           </div>
           <Loading :overlay="overlay"/>
         </v-card>
