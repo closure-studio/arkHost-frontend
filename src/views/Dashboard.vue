@@ -16,7 +16,7 @@
                 <v-select v-model="selServer" :items="server" outlined label="选择服务器" :menu-props="{offsetY: true}" return-object :rules="rule" item-value="id" item-text="name"></v-select>
                 <v-text-field label="账号" outlined required :rules="rule" v-model="account"></v-text-field>
                 <v-text-field label="密码" outlined required :rules="rule" v-model="password"></v-text-field>
-                <v-btn block tile large @click="addAccount" :disabled="disabled">添加托管</v-btn>
+                <v-btn block tile large @click="addAccount">添加托管</v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -40,7 +40,7 @@
                 <td>{{ v+1 }}</td>
                 <td>{{ k.config.account.replace(/(\d{3})\d{4}(\d{4})/, '$1囗囗囗囗$2') }}</td>
                 <td>{{ serverList[k.config.platform] }}</td>
-                <td>{{ k.config.isPause ? '暂停': '运行中'}}</td>
+                <td>{{ k.config['isPause'] ? '暂停': '运行中'}}</td>
                 <td v-html="status(k.status)" />
                 <td>
                   <v-btn small color="warning" @click="login(k.config.account, k.config.platform)">登录</v-btn>
@@ -81,11 +81,12 @@ export default {
         apiDelGame({
           account: ac,
           platform: pf
-        }).then((resp) => {
-          if (resp.code){
+        }).then(async (resp) => {
+          if (resp.code) {
+            await this.loadList()
             this.$notify('删除成功')
           }else
-            this.$notify({type: 'w', title:'删除失败', text: resp.message})
+            this.$notify({type: 'w', title: '删除失败', text: resp.message})
         })
       });
     },

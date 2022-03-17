@@ -38,3 +38,11 @@ a {
 td, th {
     white-space: nowrap !important;
 }
+.v-carousel__controls{
+    margin-bottom: 12px;
+}
+@media screen and (max-width: 960px) {
+    .v-carousel__controls{
+        display: none;
+    }
+}
