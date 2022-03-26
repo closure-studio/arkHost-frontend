@@ -43,8 +43,12 @@
           <v-divider />
           <v-tabs-items v-model="tab">
             <v-tab-item v-for="item in details.troop.squads">
-              <v-card flat>
-                <v-card-text>{{ item.squadId }}</v-card-text>
+              <v-card flat class="my-3">
+                <v-row>
+                  <v-col v-for="k in item['slots']" v-if="k" cols="12" md="3" lg="3" sm="6">
+                    <Character :char="details.troop.chars[k['charInstId']]"/>
+                  </v-col>
+                </v-row>
               </v-card>
             </v-tab-item>
           </v-tabs-items>
@@ -89,8 +93,10 @@
 </template>
 <script>
 import {apiConf, apiConfEdit, apiDetails, apiScreenshots} from "@/plugins/axios";
+import Character from "@/components/Character";
 
   export default {
+    components: {Character},
     data:() => ({
       details: {},
       model: false,

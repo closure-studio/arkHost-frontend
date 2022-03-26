@@ -45,5 +45,6 @@ export const apiScreen = (account, platform) => get(`Game/Screenshot/${account}/
 export const apiDetails = (account, platform) => get(`Game/${account}/${platform}`) // GetDetails
 export const apiConf = (account, platform) => get(`Game/Config/${account}/${platform}`) // GetConf
 export const apiConfEdit = (account, platform, params) => post(`Game/Config/${account}/${platform}`, params) // UpdateConfig
+export const apiLog = (account, platform, index) => post(`Log/${account}/${platform}/${index}`) // Log
 
 export const apiScreenshots = (account, platform) => get(`Game/Screenshots/${account}/${platform}`) // GetScreen
