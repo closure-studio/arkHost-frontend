@@ -6,6 +6,7 @@ import Da from '../views/Dashboard.vue'
 import L from '../views/User/Login.vue'
 import R from '../views/User/Register.vue'
 import C from '../views/Cron.vue'
+import Con from '../views/Contributors.vue'
 import D from '../views/User/Details.vue'
 Vue.use(Router)
 export default new Router({
@@ -22,5 +23,7 @@ export default new Router({
     path:'/details', component: D, name: '账号详情'
   },{
     path:'/dashboard', component: Da, name: '控制台'
+  },{
+    path:'/contributors', component: Con, name: '内容贡献者'
   }]
 })
