@@ -144,6 +144,10 @@
             name: '服务监控',
             event: '/cron',
             icon: 'mdi-power-plug'
+          },{
+            name: '后勤分队',
+            event: '/contributors',
+            icon: 'mdi-account-group'
           }]
         }
         return [{
@@ -171,6 +175,7 @@
           this.showNotice = false
           this.$notify({type:'s', text: '你已安全退出'})
           this.$store.dispatch("user/exit")
+          this.$router.push("/")
         })
       },
       alert(title, func){
@@ -179,10 +184,10 @@
         this.subNotice = func
       }
 		},
-		async created() {
+		created() {
       if (this.user.isLogin) {
         this.axios.defaults.headers['Authorization'] = this.user.token
-        await apiListGame().then((resp) => {
+        apiListGame().then((resp) => {
           if (resp.code) {
             this.list = resp.data
           } else {

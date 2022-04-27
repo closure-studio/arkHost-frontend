@@ -92,7 +92,7 @@
   </div>
 </template>
 <script>
-import {apiConf, apiConfEdit, apiDetails, apiScreenshots} from "@/plugins/axios";
+import {apiConf, apiConfEdit, apiDetails, apiLog, apiScreenshots, getChars} from "@/plugins/axios";
 import Character from "@/components/Character";
 
   export default {
@@ -111,8 +111,10 @@ import Character from "@/components/Character";
 
     }),
     async created() {
-      await this.loadData()
+      this.loadData()
       await this.getScreen()
+      //await getChars()
+      console.log('你有没有听见海猫的悲鸣?')
     },
     methods:{
       async getConf(){
@@ -136,9 +138,9 @@ import Character from "@/components/Character";
           }
         })
       },
-      async loadData(){
+      loadData(){
         if(this.$route.params.account && this.$store.state.user.isLogin){
-          await apiDetails(this.$route.params.account, this.$route.params.platform).then((resp) => {
+          apiDetails(this.$route.params.account, this.$route.params.platform).then((resp) => {
             if (resp.code) {
               console.log(resp.code)
               this.details = resp.data // troop
@@ -147,7 +149,7 @@ import Character from "@/components/Character";
             }
           })
         } else {
-          await this.$router.push('/')
+          this.$router.push('/')
         }
       },
       async submitEdit() {
@@ -157,7 +159,7 @@ import Character from "@/components/Character";
           "isPause": this.pause,
           "mapId": this.map,
           "platform": this.$route.params.platform,
-          "reserveAp": this.ap
+          "keepAp": this.ap
         }).then(async (resp) => {
           if (resp.code) {
             this.$notify('托管配置修改成功')
@@ -166,6 +168,9 @@ import Character from "@/components/Character";
             this.$notify({type: 'w', title: '修改托管配置失败', text: resp.message})
           }
         })
+      },
+      async getDetails(){
+        await apiLog(this.$route.params.account, this.$route.params.platform, 1)
       }
     }
   }

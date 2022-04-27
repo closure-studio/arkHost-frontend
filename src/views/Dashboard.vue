@@ -25,7 +25,8 @@
       </v-col>
       <v-col cols="12" md="8">
         <v-card>
-          <v-card-title class="ml-2" style="place-content:center">托管列表</v-card-title>
+          <v-card-title class="ml-2" style="place-content:center">托管列表<v-icon right size="20" @click="loadList">mdi-refresh</v-icon></v-card-title>
+          <Loading :overlay="overlay2"/>
           <v-simple-table>
             <template v-slot:default>
               <thead>
@@ -54,6 +55,9 @@
           </v-simple-table>
         </v-card>
       </v-col>
+      <v-col cols="12" md="4">
+        <v-alert type="info">Bug汇报,使用交流群: 450555868<br>非盈利性公益项目,且用且珍惜<br>请勿泄露您的任何账号<br>请勿肆处宣扬本网站<br>感谢您的使用</v-alert>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -70,7 +74,7 @@ export default {
     account: '',
     password: '',
     overlay: false,
-
+    overlay2: false,
     head: ['序号', '账号', '所属平台', '运行状态', '账号状态', '操作'],
     gameList: [],
     serverList: ['IOS','官服','B服']
@@ -114,13 +118,12 @@ export default {
         }).then((resp) => {
           if(resp.code){
             this.$notify('添加托管成功')
-            this.account = ''
-            this.password = ''
-            this.$refs.skadiD.clear()
+            this.overlay = false
+            this.$router.go(0)
           }else{
             this.$notify({type: 'w', title: '添加托管失败',text: resp.message})
+            this.overlay = false
           }
-          this.overlay = false
         })
       }
     },
@@ -147,11 +150,14 @@ export default {
       })
     },
     async loadList() {
+      this.overlay2 = true
       await apiListGame().then((resp) => {
         if (resp.code) {
           this.gameList = resp.data
+          this.overlay2 = false
         } else {
           this.$notify({type: 'w', title: '获取托管信息失败', text: resp.message})
+          this.overlay2 = false
         }
       })
     }
