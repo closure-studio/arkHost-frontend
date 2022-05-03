@@ -35,6 +35,7 @@ function del(url, params) {
 export default axios
 export const apiRegister = params => post('Auth', params) // Register
 export const apiLogin = params => get(`Auth/${params}`) // Login
+export const apiReLogin = (token) => get(`Auth/${token}`) // ReLogin
 export const apiCron = () => get('Nodes') // Cron
 export const apiAnnounce = () => get('System/Announcement') // Announce
 export const apiAddGame = params => post('Game', params) // Game
@@ -46,6 +47,5 @@ export const apiDetails = (account, platform) => get(`Game/${account}/${platform
 export const apiConf = (account, platform) => get(`Game/Config/${account}/${platform}`) // GetConf
 export const apiConfEdit = (account, platform, params) => post(`Game/Config/${account}/${platform}`, params) // UpdateConfig
 export const apiLog = (account, platform, index) => get(`Log/${account}/${platform}/${index}`) // Log
-
 export const apiScreenshots = (account, platform) => get(`Game/Screenshots/${account}/${platform}`) // GetScreen
-export const getChars = () => get(`https://res.arknights.host/dst/gamedata/excel/character_table.json`)
+export const getChars = () => get(`https://jackjieyyy.github.io/ArknightsGameData/zh_CN/gamedata/excel/activity_table.json`)

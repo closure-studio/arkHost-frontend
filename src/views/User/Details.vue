@@ -113,7 +113,7 @@ import Character from "@/components/Character";
     async created() {
       this.loadData()
       await this.getScreen()
-      //await getChars()
+      await getChars()
       console.log('你有没有听见海猫的悲鸣?')
     },
     methods:{

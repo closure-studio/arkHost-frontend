@@ -63,6 +63,7 @@
           apiLogin(`${this.email}/${this.password}`).then((resp) => {
             if(resp.code){
               this.$store.dispatch('user/load',resp.data)
+              this.axios.defaults.headers['Authorization'] = resp.data.token
               this.$notify({type:'s',text:'登录成功，欢迎来到可露希尔的午夜商超'})
               this.$router.push('/dashboard')
             }else{

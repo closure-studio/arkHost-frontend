@@ -110,7 +110,7 @@
 </template>
 <script>
   import Notice from "@/components/Common/Alert";
-  import {apiListGame} from "@/plugins/axios";
+  import {apiListGame, apiReLogin} from "@/plugins/axios";
 	export default {
     components: {
       Notice
@@ -185,7 +185,16 @@
       }
 		},
 		created() {
-      if (this.user.isLogin) {
+      if (this.user.token) {
+        if ((Date.now() - this.user.lastLoginTs) / 1000 > 43200){
+          apiReLogin(this.user.token).then((resp) => {
+            if (resp.code) {
+              this.$store.dispatch('user/load', resp.data)
+              this.$notify({type: 'w', text: '自动登录成功'})
+              this.axios.defaults.headers['Authorization'] = resp.data.token
+            }
+          })
+        }
         this.axios.defaults.headers['Authorization'] = this.user.token
         apiListGame().then((resp) => {
           if (resp.code) {

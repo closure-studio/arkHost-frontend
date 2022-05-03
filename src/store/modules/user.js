@@ -1,7 +1,8 @@
 const user = {
 	namespaced: true,
 	state: {
-		isLogin: false
+		isLogin: false,
+		lastLoginTs: 0
 	},
 	mutations: {
 		Load(state, data) {
@@ -9,6 +10,7 @@ const user = {
 				state[k] = data[k]
 			}
 			state.isLogin = true
+			state.lastLoginTs = Date.now()
 		},
 		Exit(state){
 			for(let k in state){
