@@ -19,3 +19,17 @@
     </div>
   </div>
 </template>
+<script>
+  export default {
+    created() {
+      if (this.user.isLogin) {
+        this.$router.push('/dashboard')
+      }
+    },
+    computed:{
+      user(){
+        return this.$store.state.user
+      }
+    }
+  }
+</script>

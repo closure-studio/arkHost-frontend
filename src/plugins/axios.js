@@ -48,4 +48,3 @@ export const apiConf = (account, platform) => get(`Game/Config/${account}/${plat
 export const apiConfEdit = (account, platform, params) => post(`Game/Config/${account}/${platform}`, params) // UpdateConfig
 export const apiLog = (account, platform, index) => get(`Log/${account}/${platform}/${index}`) // Log
 export const apiScreenshots = (account, platform) => get(`Game/Screenshots/${account}/${platform}`) // GetScreen
-export const getChars = () => get(`https://jackjieyyy.github.io/ArknightsGameData/zh_CN/gamedata/excel/activity_table.json`)
