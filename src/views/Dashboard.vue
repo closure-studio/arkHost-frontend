@@ -3,7 +3,7 @@
     <v-card class="my-4">
       <v-card-title class="ml-2 orange--text">平台公告</v-card-title>
       <div class="pb-4 ml-6">
-        <span class="text-h6" style="white-space:pre">{{this.ann}}</span>
+        <span class="text-h6" style="white-space:break-spaces">{{this.ann}}</span>
       </div>
     </v-card>
     <v-row>
