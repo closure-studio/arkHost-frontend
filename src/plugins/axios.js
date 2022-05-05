@@ -27,7 +27,7 @@ function get(url) {
 }
 function del(url, params) {
 	return new Promise((resolve) => {
-		axios.delete(url, {data:params}).then(res => {
+		axios.delete(url, {data: params}).then(res => {
 			resolve(res)
 		})
 	})

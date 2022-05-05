@@ -7,14 +7,32 @@
         <v-btn large tile class="mr-2" color="orange" outlined @click="model=true,getConf()">修改信息</v-btn>
       </v-card-title>
       <v-divider />
-      <v-row>
-        <v-col cols="12">
-          <div class="ml-5 mt-3">
-            <v-badge inline tile content="助理"/><br>
-            <span class="subtitle-1">浊心斯卡蒂</span>
+      <v-row class="mx-6 mt-4 justify-center">
+        <v-col v-if="$vuetify.breakpoint.smAndDown" class="pb-0">
+          <v-alert outlined dense type="success">欢迎回来 <code>Dr.{{details.status.nickName}}</code><br>您上次登录是在：<code>{{ formatDate(details.status.LastApAddTime, true) }}</code></v-alert>
+        </v-col>
+        <v-alert outlined dense type="success" v-else>欢迎回来 <code>Dr.{{details.status.nickName}}</code> 您上次登录是在：<code>{{ formatDate(details.status.LastApAddTime, true) }}</code></v-alert>
+      </v-row>
+      <v-row class="mb-3 mx-6">
+        <v-col cols="6" md="4" lg="4" v-for="k in 3" class="px-0">
+          <div class="px-3">
+            <v-chip :color="['warning', 'error', 'success'][k-1]" large label style="width: 100%" link outlined>
+              <v-avatar size="36" left>
+                <img :src="'https://res.arknights.host/dst/static/items/'+info[k+2]+'.webp'">
+              </v-avatar>
+              {{['源石', '单抽券', '十连券'][k-1]}}:{{info[k-1]}}
+            </v-chip>
           </div>
         </v-col>
       </v-row>
+      <div class="px-4 pb-4 d-flex align-center">
+        <v-divider class="mr-4 ml-2"></v-divider><p class="text--secondary text-center mb-0">大群信息</p><v-divider class="ml-4 mr-2"></v-divider>
+      </div>
+      <div class="px-6 pb-2">
+        <p class="text-title mb-2">当前等级：<code>{{ details.status.level }}</code> （经验：<code>{{ details.status.exp }}</code> ）</p>
+        <p class="text-title mb-2">当前看板：<code>{{ chars[details.status.secretary]['name'] }}</code></p>
+        <p class="text-title mb-2">龙门&emsp;币：<code>{{ details.status.gold}}</code></p>
+      </div>
     </v-card>
     <v-expansion-panels>
       <v-expansion-panel>
@@ -23,10 +41,7 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-carousel cycle hide-delimiter-background :show-arrows="false" height="100%">
-            <v-carousel-item v-for="(item,i) in screenshots" eager
-               :key="i"
-               :src="item.url"
-            />
+            <v-carousel-item v-for="(item,i) in screenshots" eager :key="i" :src="item.url"/>
           </v-carousel>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -89,30 +104,38 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
   </div>
 </template>
 <script>
-import {apiConf, apiConfEdit, apiDetails, apiLog, apiScreenshots, getChars} from "@/plugins/axios";
+import {apiConf, apiConfEdit, apiDetails, apiLog, apiScreenshots} from "@/plugins/axios";
 import Character from "@/components/Character";
 
   export default {
     components: {Character},
     data:() => ({
-      details: {},
+      details: {
+        status: {},
+        troop: {
+          squads: []
+        }
+      },
       model: false,
-
+      info: [],
       map: '',
       ap: '',
       pause: false,
       autoBattle: true,
-      screenshots: [],
-
+      screenshots: {},
+      chars: [],
       tab: 0,
 
     }),
     async created() {
-      this.loadData()
+      await this.loadData()
       await this.getScreen()
+      this.chars = require('../../assets/data/character_table.json')
+      console.log(chars)
       console.log('你有没有听见海猫的悲鸣?')
     },
     methods:{
@@ -137,18 +160,21 @@ import Character from "@/components/Character";
           }
         })
       },
-      loadData(){
+      async loadData(){
         if(this.$route.params.account && this.$store.state.user.isLogin){
           apiDetails(this.$route.params.account, this.$route.params.platform).then((resp) => {
             if (resp.code) {
-              console.log(resp.code)
               this.details = resp.data // troop
+              this.info = [
+                  this.details.status.androidDiamond, this.details.status.gachaTicket, this.details.status.tenGachaTicket,
+                  'DIAMOND', 'TKT_GACHA', 'TKT_GACHA_10'
+              ]
             } else {
               this.$notify({type: 'w', title: '获取信息失败', text: resp.message})
             }
           })
         } else {
-          this.$router.push('/')
+          await this.$router.push('/')
         }
       },
       async submitEdit() {

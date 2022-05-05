@@ -94,7 +94,7 @@
               outlined
           ><v-icon left>
             mdi-cube-outline
-          </v-icon>当前版本: 114514</v-chip>
+          </v-icon>当前版本: 加入，进化</v-chip>
         </v-card>
 				<router-view @alert="alert"/>
 			</v-container>

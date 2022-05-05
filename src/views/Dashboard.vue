@@ -3,7 +3,7 @@
     <v-card class="my-4">
       <v-card-title class="ml-2 orange--text">平台公告</v-card-title>
       <div class="pb-4 ml-6">
-        <span class="text-h6">&emsp;&emsp;{{this.ann}}</span>
+        <span class="text-h6" style="white-space:pre">{{this.ann}}</span>
       </div>
     </v-card>
     <v-row>
@@ -45,8 +45,7 @@
                 <td v-html="status(k.status)" />
                 <td>
                   <v-btn small color="warning" @click="login(k.config.account, k.config.platform)">登录</v-btn>
-                  <v-btn small color="green" class="mx-2" @click="getScreen(k.config.account, k.config.platform)">截图</v-btn>
-                  <v-btn small color="info"  class="mr-2" @click="$router.push({name:'账号详情', params: {account: k.config.account, platform: k.config.platform}}).catch(err => {})">详情</v-btn>
+                  <v-btn small color="info"  class="mx-2" @click="$router.push({name:'账号详情', params: {account: k.config.account, platform: k.config.platform}}).catch(err => {})">详情</v-btn>
                   <v-btn small color="error" @click="del(k.config.account, k.config.platform)">删除</v-btn>
                 </td>
               </tr>
