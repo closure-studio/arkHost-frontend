@@ -74,28 +74,27 @@
 				</div>
 			</template>
 			<template v-else>
-				<v-toolbar-title v-text="$route.name" class="pl-0" />
+				<v-toolbar-title v-text="$route.name" class="pl-0" @click="isStart=true"/>
         <v-btn icon><v-icon>mdi-plus</v-icon></v-btn>
 			</template>
 		</v-app-bar>
 		<v-main>
-			<notifications position="center"/>
 			<v-container>
         <v-card tile class="d-flex align-center mb-2">
-          <v-breadcrumbs
-              :items="items"
-              divider=">">
+          <v-breadcrumbs :items="items" divider=">">
           </v-breadcrumbs>
           <v-spacer />
-          <v-chip
-              color="green"
-              class="mr-6"
-              label
-              outlined
-          ><v-icon left>
+          <v-chip color="green" class="mr-6" label outlined>
+            <v-icon left>
             mdi-cube-outline
-          </v-icon>当前版本: 加入，进化</v-chip>
+          </v-icon>当前版本: 进化</v-chip>
         </v-card>
+        <Update />
+        <BottomMenu
+            :visible="$vuetify.breakpoint.smAndDown && isStart"
+            @close="closeMenu"
+        >
+        </BottomMenu>
 				<router-view @alert="alert"/>
 			</v-container>
       <notice
@@ -110,16 +109,19 @@
 </template>
 <script>
   import Notice from "@/components/Common/Alert";
+  import Update from "@/components/Common/Update";
+  import BottomMenu from "@/components/Common/BottomMenu";
   import {apiListGame, apiReLogin} from "@/plugins/axios";
 	export default {
     components: {
-      Notice
+      Notice, Update, BottomMenu
     },
 		data: () => ({
 			drawer: false,
 			selectedItem: 0,
       showNotice: false,
       title: '',
+      isStart: false,
       subNotice: '',
       list: []
 		}),
@@ -148,6 +150,10 @@
             name: '后勤分队',
             event: '/contributors',
             icon: 'mdi-account-group'
+          },{
+            name: '闪断记录',
+            event: '/history',
+            icon: 'mdi-history'
           }]
         }
         return [{
@@ -177,6 +183,9 @@
           this.$store.dispatch("user/exit")
           this.$router.push("/")
         })
+      },
+      closeMenu(v) {
+        this.isStart = v
       },
       alert(title, func){
         this.showNotice = true

@@ -8,6 +8,7 @@ import R from '../views/User/Register.vue'
 import C from '../views/Cron.vue'
 import Con from '../views/Contributors.vue'
 import D from '../views/User/Details.vue'
+import His from '../views/History.vue'
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -25,5 +26,7 @@ export default new Router({
     path:'/dashboard', component: Da, name: '控制台'
   },{
     path:'/contributors', component: Con, name: '内容贡献者'
+  },{
+    path:'/history', component: His, name: '更新记录'
   }]
 })

@@ -23,19 +23,11 @@ Vue.prototype.formatDate = function (value, details = false) {
   if (details) {
     h = date.getHours()
     min = date.getMinutes()
-    if (h < 10) {
-      h = '0' + h;
-    }
-    if (min < 10) {
-      min = '0' + min;
-    }
+    if (h < 10) h = '0' + h;
+    if (min < 10) min = '0' + min;
   }
-  if (m < 10) {
-    m = '0' + m;
-  }
-  if (d < 10) {
-    d = '0' + d;
-  }
+  if (m < 10) m = '0' + m;
+  if (d < 10) d = '0' + d;
   y = y.substring(y.length - 2)
   let str = y + '-' + m + '-' + d + ' '
   return details ? str + h + ':' + min : str

@@ -25,9 +25,7 @@
           </div>
         </v-col>
       </v-row>
-      <div class="px-4 pb-4 d-flex align-center">
-        <v-divider class="mr-4 ml-2"></v-divider><p class="text--secondary text-center mb-0">大群信息</p><v-divider class="ml-4 mr-2"></v-divider>
-      </div>
+      <Divider msg="大群信息"/>
       <div class="px-6 pb-2">
         <p class="text-title mb-2">当前等级：<code>{{ details.status.level }}</code> （经验：<code>{{ details.status.exp }}</code> ）</p>
         <p class="text-title mb-2">当前看板：<code>{{ chars[details.status.secretary]['name'] }}</code></p>
@@ -110,9 +108,10 @@
 <script>
 import {apiConf, apiConfEdit, apiDetails, apiLog, apiScreenshots} from "@/plugins/axios";
 import Character from "@/components/Character";
+import Divider from "@/components/Common/divider";
 
   export default {
-    components: {Character},
+    components: {Divider, Character},
     data:() => ({
       details: {
         status: {},

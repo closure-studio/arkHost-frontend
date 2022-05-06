@@ -1,0 +1,61 @@
+[{
+  "title": "代号：挡一盾",
+  "version": "ver.0.0.1",
+  "date": "2022-02-05",
+  "list": [{
+    "text": "开坑！",
+    "type": "stone"
+  }],
+  "type": "important"
+},{
+  "title": "代号：法抗盾",
+  "version": "ver.0.0.5",
+  "date": "2022-03-03",
+  "list": [{
+    "text": "上线！",
+    "type": "stone"
+  }],
+  "type": "important"
+},{
+  "title": "代号：奶人盾",
+  "version": "ver.0.1.5",
+  "date": "2022-03-17",
+  "list": [{
+    "text": "实装账号详细信息",
+    "type": "feature"
+  }],
+  "type": "important"
+},{
+  "title": "代号：挡四盾",
+  "version": "ver.0.2.1",
+  "date": "2022-04-28",
+  "list": [{
+    "text": "修正添加账号后无法操作的BUG",
+    "type": "fix"
+  },{
+    "text": "优化界面",
+    "type": "beautify"
+  }],
+  "type": "important"
+},{
+  "title": "代号：杰斯盾",
+  "version": "ver.0.2.5",
+  "date": "2022-05-07",
+  "list": [{
+    "text": "实装账号信息显示",
+    "type": "beautify"
+  },{
+    "text": "实装更新记录显示",
+    "type": "beautify"
+  },{
+    "text": "实装捞人页面",
+    "type": "beautify"
+  },{
+    "text": "实装-抽水马桶-",
+    "type": "beautify"
+  },{
+    "text": "优化界面",
+    "type": "beautify"
+  }],
+  "type": "important"
+}]
