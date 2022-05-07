@@ -90,6 +90,7 @@
           </v-icon>当前版本: 进化</v-chip>
         </v-card>
         <Update />
+        <notifications position="center"/>
         <BottomMenu
             :visible="$vuetify.breakpoint.smAndDown && isStart"
             @close="closeMenu"

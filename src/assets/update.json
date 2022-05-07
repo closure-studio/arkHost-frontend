@@ -58,4 +58,19 @@
     "type": "beautify"
   }],
   "type": "important"
+},{
+  "title": "代号：闪盾",
+  "version": "ver.0.3.1",
+  "date": "2022-05-08",
+  "list": [{
+    "text": "实装仓库信息显示",
+    "type": "beautify"
+  },{
+    "text": "实装挂机配置",
+    "type": "beautify"
+  },{
+    "text": "修正界面BUG",
+    "type": "fix"
+  }],
+  "type": "important"
 }]

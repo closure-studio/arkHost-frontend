@@ -28,7 +28,7 @@
       <Divider msg="大群信息"/>
       <div class="px-6 pb-2">
         <p class="text-title mb-2">当前等级：<code>{{ details.status.level }}</code> （经验：<code>{{ details.status.exp }}</code> ）</p>
-        <p class="text-title mb-2">当前看板：<code>{{ chars[details.status.secretary]['name'] }}</code></p>
+        <p class="text-title mb-2">当前看板：<code>{{ chars[details.status.secretary].name }}</code></p>
         <p class="text-title mb-2">龙门&emsp;币：<code>{{ details.status.gold}}</code></p>
       </div>
     </v-card>
@@ -72,7 +72,14 @@
           仓库统计
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-
+          <div class="item" :style="'grid-template-columns: repeat(auto-fill, minmax(' + ($vuetify.breakpoint.smAndDown ? '100' : '140') + 'px, 1fr));'">
+            <v-card v-for="(num, v) in details.inventory">
+              <v-img class="item-image" :src="'https://res.arknights.host/dst/static/items/'+items['items'][v]['iconId']+'.webp'" />
+              <p class="item-content">{{ items['items'][v]['name'] }}</p>
+              <p class="item-count">× {{ num }}</p>
+              <p class="item-time" v-if="false">no</p>
+            </v-card>
+          </div>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -83,8 +90,18 @@
           <v-form refs="doctor">
             <v-row>
               <v-col cols="12">
-                <v-text-field label="自动作战地图" v-model="map"></v-text-field>
-                <v-text-field label="最小保留理智" v-model="ap"></v-text-field>
+                <v-select
+                    color="info"
+                    :items='maps'
+                    item-value="val"
+                    v-model="map"
+                    outlined
+                    dense
+                    label='选择地图'
+                    hide-details
+                    :menu-props="{ offsetY: true }"
+                ></v-select>
+                <v-text-field label="理智保留" v-model="ap" persistent-hint :hint="'当前等级最大自然恢复理智为 ' + details.status.maxAp" class="mt-3"></v-text-field>
                 <div class="d-flex justify-space-between">
                   <v-switch
                       v-model="autoBattle"
@@ -105,11 +122,51 @@
 
   </div>
 </template>
+<style lang="sass">
+  .item
+    display: grid
+    grid-gap: 1rem
+
+  .item-image
+    position: relative
+    left: 8px
+    width: 100px
+    height: 100px
+
+  .item-count
+    color: white
+    position: absolute
+    right: 0
+    top: 0
+    background-color: rgba(0, 0, 0, .6)
+    padding: 2.5px 5px
+    margin: 0
+    pointer-events: none !important
+
+  .item-content
+    color: white
+    position: absolute
+    right: 0
+    background-color: rgba(0, 0, 0, .6)
+    padding: 2.5px 5px
+    bottom: 0
+    margin-bottom: 0 !important
+    pointer-events: none !important
+
+  .item-time
+    color: white
+    position: absolute
+    right: 12px
+    bottom: 15px
+    background-color: rgba(0, 0, 0, .6)
+    padding: 2.5px 5px
+    margin: 0
+    pointer-events: none !important
+</style>
 <script>
-import {apiConf, apiConfEdit, apiDetails, apiLog, apiScreenshots} from "@/plugins/axios";
+import {apiConf, apiConfEdit, apiDetails, apiGetMapList, apiLog, apiScreenshots} from "@/plugins/axios";
 import Character from "@/components/Character";
 import Divider from "@/components/Common/divider";
-
   export default {
     components: {Divider, Character},
     data:() => ({
@@ -121,7 +178,9 @@ import Divider from "@/components/Common/divider";
       },
       model: false,
       info: [],
+      items: [],
       map: '',
+      maps: [],
       ap: '',
       pause: false,
       autoBattle: true,
@@ -131,17 +190,23 @@ import Divider from "@/components/Common/divider";
 
     }),
     async created() {
+      this.chars = require('../../assets/data/character_table.json')
+      this.items = await require('../../assets/data/item_table.json')
+      //console.log(this.items.items)
       await this.loadData()
       await this.getScreen()
-      this.chars = require('../../assets/data/character_table.json')
-      console.log(chars)
       console.log('你有没有听见海猫的悲鸣?')
     },
     methods:{
       async getConf(){
+        await apiGetMapList().then((resp) => {
+          for(const k in resp.data.mapDict){
+            this.maps.push({text: k, val: resp.data.mapDict[k]})
+          }
+        })
         await apiConf(this.$route.params.account, this.$route.params.platform).then((resp)=>{
           if (resp.code){
-            this.ap = resp.data.reserveAp
+            this.ap = resp.data.keepingAP
             this.map = resp.data.mapId
             this.autoBattle = resp.data.isAutoBattle
             this.pause = resp.data.isPause
@@ -176,15 +241,15 @@ import Divider from "@/components/Common/divider";
           await this.$router.push('/')
         }
       },
-      async submitEdit() {
-        await apiConfEdit(this.$route.params.account, this.$route.params.platform, {
+      submitEdit() {
+        apiConfEdit(this.$route.params.account, this.$route.params.platform, {
           "account": this.$route.params.account,
           "isAutoBattle": this.autoBattle,
           "isPause": this.pause,
           "mapId": this.map,
           "platform": this.$route.params.platform,
-          "keepAp": this.ap
-        }).then(async (resp) => {
+          "keepingAP": Number(this.ap)
+        }).then((resp) => {
           if (resp.code) {
             this.$notify('托管配置修改成功')
             //await this.loadData()

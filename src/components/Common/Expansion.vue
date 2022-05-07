@@ -6,7 +6,7 @@
  * @LastEditTime: 2021-07-17 21:24:16
 -->
 <style>
-  span {
+  .update {
     white-space: pre-wrap
   }
 </style>
@@ -23,7 +23,7 @@
       <v-expansion-panel-content class="px-1">
         <div v-for="(k, v) in row.list">
           <h2 class="pb-1">{{ typeMap[v] }}</h2>
-          <span v-for="(d, dd) in k" >&emsp;&nbsp;{{ dd+1 }}. {{ d }}<br></span>
+          <span v-for="(d, dd) in k" class="update">&emsp;&nbsp;{{ dd+1 }}. {{ d }}<br></span>
         </div>
       </v-expansion-panel-content>
     </v-expansion-panel>

@@ -15,7 +15,7 @@
             style="padding: 1px 5px; margin-right: 10px"
           >{{ latestPost.version }}</span>
         </span>
-        <span class="d-flex">
+        <span display="flex">
           <span
             class="green white--text darken-2"
             style="padding: 1px 5px"
@@ -25,7 +25,7 @@
             style="padding: 1px 5px; margin-right: 10px"
           >{{ latestPost.date }}</span>
         </span>
-        <span class="d-none d-lg-inline">
+        <span display="flex" class="d-none d-lg-inline">
           <span
             class="orange white--text darken-2"
             style="padding: 1px 5px"

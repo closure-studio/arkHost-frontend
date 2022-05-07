@@ -46,7 +46,7 @@
       <v-row>
         <v-col cols="6" md="3" lg="3" v-for="i in teams" >
           <v-card class="d-flex align-center py-4 flex-column" >
-            <v-avatar size="128" class="mb-4">
+            <v-avatar size="64" class="mb-4">
               <img :src="`https://res.arknights.host/team/${i[1]}.png`" alt="skadiD">
             </v-avatar>
             <span class="text-h5">{{i[0]}}</span>
