@@ -73,11 +73,10 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <div class="item" :style="'grid-template-columns: repeat(auto-fill, minmax(' + ($vuetify.breakpoint.smAndDown ? '100' : '140') + 'px, 1fr));'">
-            <v-card v-for="(num, v) in details.inventory">
+            <v-card v-for="(num, v) in details.inventory" v-if="num !== 0">
               <v-img class="item-image" :src="'https://res.arknights.host/dst/static/items/'+items['items'][v]['iconId']+'.webp'" />
               <p class="item-content">{{ items['items'][v]['name'] }}</p>
               <p class="item-count">× {{ num }}</p>
-              <p class="item-time" v-if="false">no</p>
             </v-card>
           </div>
         </v-expansion-panel-content>
