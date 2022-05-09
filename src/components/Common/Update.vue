@@ -1,10 +1,10 @@
 <template>
-  <VDialog persistent :value="show" width="500">
-    <VCard>
-      <VCardTitle class="headline deep-purple white--text font-weight-black">
+  <v-dialog persistent :value="show" width="500">
+    <v-card>
+      <v-card-title class="headline deep-purple white--text font-weight-black">
         闪断更新公告
-      </VCardTitle>
-      <VCardText class="mt-5">
+      </v-card-title>
+      <v-card-text class="mt-5">
         <span>
           <span
             class="blue white--text darken-2"
@@ -45,9 +45,9 @@
           <div v-for="eachType in ['stone', 'cloud', 'feature', 'fix', 'beautify']" :key="eachType">
             <div v-if="latestPost.list[eachType] !== undefined">
               <div class="body-2 font-weight-bold">
-                <VIcon left small>
+                <v-icon left small>
                   {{ getListIcon(eachType) }}
-                </VIcon><span style="vertical-align: middle" class="text--primary">{{
+                </v-icon><span style="vertical-align: middle" class="text--primary">{{
                   getTypeName(eachType)
                 }}</span>
               </div>
@@ -62,29 +62,29 @@
             </div>
           </div>
         </div>
-      </VCardText>
-      <VDivider />
-      <VCardActions class="caption" v-html="tips"></VCardActions>
-      <VDivider />
+      </v-card-text>
+      <v-divider />
+      <v-card-actions class="caption" v-html="tips"></v-card-actions>
+      <v-divider />
 
-      <VCardActions>
-        <VSpacer />
-        <VBtn to="/Contributors" text @click="show = false" tile>
-          <VIcon left>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn to="/Contributors" text @click="show = false" tile>
+          <v-icon left>
             mdi-page-layout-sidebar-left
-          </VIcon>广告：加入工程部
-        </VBtn>
-        <VBtn
+          </v-icon>广告：加入工程部
+        </v-btn>
+        <v-btn
           color="primary"
           text
           @click="show = false"
           tile
         >
-          此事平平无奇
-        </VBtn>
-      </VCardActions>
-    </VCard>
-  </VDialog>
+          此事平平无奇<v-icon right>mdi-close</v-icon>
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 <script>
 import log from "@/assets/update.json";

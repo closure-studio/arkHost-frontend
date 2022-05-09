@@ -4,7 +4,7 @@
       <v-card-title class="ml-2">托管详情
         <span class="text--secondary ml-2">- {{$route.params.account.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}}</span>
         <v-spacer />
-        <v-btn large tile class="mr-2" color="orange" outlined @click="model=true,getConf()">修改信息</v-btn>
+        <v-btn large tile class="mr-2" color="orange" outlined @click="model=true,getConf()">挂机配置</v-btn>
       </v-card-title>
       <v-divider />
       <v-row class="mx-6 mt-4 justify-center">
@@ -18,7 +18,7 @@
           <div class="px-3">
             <v-chip :color="['warning', 'error', 'success'][k-1]" large label style="width: 100%" link outlined>
               <v-avatar size="36" left>
-                <img :src="'https://res.arknights.host/dst/static/items/'+info[k+2]+'.webp'">
+                <img :src="'https://ak.dzp.me/dst/items/'+info[k+2]+'.webp'">
               </v-avatar>
               {{['源石', '单抽券', '十连券'][k-1]}}:{{info[k-1]}}
             </v-chip>
@@ -74,7 +74,7 @@
         <v-expansion-panel-content>
           <div class="item" :style="'grid-template-columns: repeat(auto-fill, minmax(' + ($vuetify.breakpoint.smAndDown ? '100' : '140') + 'px, 1fr));'">
             <v-card v-for="(num, v) in details.inventory" v-if="num !== 0">
-              <v-img class="item-image" :src="'https://res.arknights.host/dst/static/items/'+items['items'][v]['iconId']+'.webp'" />
+              <v-img class="item-image" :src="'https://ak.dzp.me/dst/items/'+items['items'][v]['iconId']+'.webp'" />
               <p class="item-content">{{ items['items'][v]['name'] }}</p>
               <p class="item-count">× {{ num }}</p>
             </v-card>
