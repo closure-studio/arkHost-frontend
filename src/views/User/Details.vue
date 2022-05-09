@@ -35,11 +35,11 @@
     <v-expansion-panels>
       <v-expansion-panel>
         <v-expansion-panel-header>
-          实时截图
+          不实时截图
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-carousel cycle hide-delimiter-background :show-arrows="false" height="100%">
-            <v-carousel-item v-for="(item,i) in screenshots" eager :key="i" :src="item.url"/>
+            <v-carousel-item v-for="(file, i) in screenshots.file" eager :key="i" :src="screenshots.host + file"/>
           </v-carousel>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -105,10 +105,6 @@
                   <v-switch
                       v-model="autoBattle"
                       label='自动战斗'
-                  ></v-switch>
-                  <v-switch
-                      v-model="pause"
-                      label='暂停托管'
                   ></v-switch>
                 </div>
                 <v-btn block tile large @click="submitEdit">提交修改</v-btn>
@@ -181,9 +177,11 @@ import Divider from "@/components/Common/divider";
       map: '',
       maps: [],
       ap: '',
-      pause: false,
       autoBattle: true,
-      screenshots: {},
+      screenshots: {
+        host: '',
+        file: []
+      },
       chars: [],
       tab: 0,
 
@@ -204,20 +202,23 @@ import Divider from "@/components/Common/divider";
           }
         })
         await apiConf(this.$route.params.account, this.$route.params.platform).then((resp)=>{
-          if (resp.code){
+          if (resp.code) {
             this.ap = resp.data.keepingAP
             this.map = resp.data.mapId
             this.autoBattle = resp.data.isAutoBattle
             this.pause = resp.data.isPause
-          }else{
+          } else {
             this.$notify({type: 'w', title: '获取信息失败', text: resp.message})
           }
         })
       },
       async getScreen(){
         await apiScreenshots(this.$route.params.account, this.$route.params.platform).then((resp) => {
-          if (resp.code){
-            this.screenshots = resp.data
+          if (resp.code) {
+            for (const k of resp.data) {
+              this.screenshots.host = k.host
+              Array.prototype.push.apply(this.screenshots.file, k['fileName'])
+            }
           }else{
             this.$notify({type: 'w', title: '获取实时截图失败', text: resp.message})
           }
@@ -244,7 +245,6 @@ import Divider from "@/components/Common/divider";
         apiConfEdit(this.$route.params.account, this.$route.params.platform, {
           "account": this.$route.params.account,
           "isAutoBattle": this.autoBattle,
-          "isPause": this.pause,
           "mapId": this.map,
           "platform": this.$route.params.platform,
           "keepingAP": Number(this.ap)

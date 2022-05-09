@@ -87,7 +87,7 @@
           <v-chip color="green" class="mr-6" label outlined>
             <v-icon left>
             mdi-cube-outline
-          </v-icon>当前版本: 进化</v-chip>
+          </v-icon>当前版本: 飞升</v-chip>
         </v-card>
         <Update />
         <notifications position="center"/>

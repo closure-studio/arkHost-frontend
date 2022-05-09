@@ -73,4 +73,13 @@
     "type": "fix"
   }],
   "type": "important"
+},{
+  "title": "代号：昆图斯",
+  "version": "ver.0.3.5",
+  "date": "2022-05-10",
+  "list": [{
+    "text": "适配截图返回",
+    "type": "beautify"
+  }],
+  "type": "important"
 }]
