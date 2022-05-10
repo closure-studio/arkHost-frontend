@@ -3,7 +3,7 @@
     <v-row style="margin:0;height:100%">
       <v-col cols="4" :style="'padding:5px 0 0 0;background:url('+src+'avatar/ASSISTANT/'+char['charId']+'.webp) center bottom / 95% no-repeat'">
         <v-avatar size="32" tile style="-webkit-box-shadow:2px 2px 2px #1e1e1e;float:right">
-          <img style="filter:invert(100%)" src="/assets/group/Caster.png">
+          <img style="filter:invert(100%)" :src="'/assets/group/' + group +'.png'">
         </v-avatar>
         <v-avatar color="purple" rounded size="36">
           {{char['level']}}
@@ -26,7 +26,7 @@
       <v-col v-for="k in char['skills']" cols="2" class="d-flex flex-column align-center justify-center">
         <v-badge :color="k['specializeLevel'] ? 'red' : 'blue'" bordered right overlap :content="k['specializeLevel'] ? k['specializeLevel'] : char['mainSkillLvl']">
           <v-avatar tile :size=" $vuetify.breakpoint.smAndDown ? '36' : '50'">
-            <img :src="src + 'static/skills/skill_icon_'+k['skillId']+'.webp'">
+            <img :src="src + '/skills/skill_icon_'+k['skillId']+'.webp'">
           </v-avatar>
         </v-badge>
       </v-col>
@@ -38,7 +38,7 @@
   export default {
     data() {
       return {
-        src: "https://res.arknights.host/dst/"
+        src: "https://ak.dzp.me/dst/"
       }
     },
     props: {
@@ -46,6 +46,7 @@
         type: Object,
         default: () => {},
       },
+      group: String
     }
   }
 </script>

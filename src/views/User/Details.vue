@@ -2,16 +2,16 @@
   <div>
     <v-card class="my-4">
       <v-card-title class="ml-2">托管详情
-        <span class="text--secondary ml-2">- {{$route.params.account.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}}</span>
+        <span class="text--secondary ml-2">- {{$route.query.account.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}}</span>
         <v-spacer />
         <v-btn large tile class="mr-2" color="orange" outlined @click="model=true,getConf()">挂机配置</v-btn>
       </v-card-title>
       <v-divider />
       <v-row class="mx-6 mt-4 justify-center">
         <v-col v-if="$vuetify.breakpoint.smAndDown" class="pb-0">
-          <v-alert outlined dense type="success">欢迎回来 <code>Dr.{{details.status.nickName}}</code><br>您上次登录是在：<code>{{ formatDate(details.status.LastApAddTime, true) }}</code></v-alert>
+          <v-alert outlined dense type="success">欢迎回来：<code>Dr.{{details.status.nickName}}</code><br>上次登录：<code>{{ formatDate(details.status.lastOnlineTs, true) }}</code></v-alert>
         </v-col>
-        <v-alert outlined dense type="success" v-else>欢迎回来 <code>Dr.{{details.status.nickName}}</code> 您上次登录是在：<code>{{ formatDate(details.status.LastApAddTime, true) }}</code></v-alert>
+        <v-alert outlined dense type="success" v-else>欢迎回来：<code>Dr.{{details.status.nickName}}</code> 上次登录：<code>{{ formatDate(details.status.lastOnlineTs, true) }}</code></v-alert>
       </v-row>
       <v-row class="mb-3 mx-6">
         <v-col cols="6" md="4" lg="4" v-for="k in 3" class="px-0">
@@ -25,11 +25,20 @@
           </div>
         </v-col>
       </v-row>
-      <Divider msg="大群信息"/>
-      <div class="px-6 pb-2">
-        <p class="text-title mb-2">当前等级：<code>{{ details.status.level }}</code> （经验：<code>{{ details.status.exp }}</code> ）</p>
-        <p class="text-title mb-2">当前看板：<code>{{ chars[details.status.secretary].name }}</code></p>
-        <p class="text-title mb-2">龙门&emsp;币：<code>{{ details.status.gold}}</code></p>
+      <Divider msg="↓ 巴别塔饿灵 ↓"/>
+      <div class="px-6 pb-2 d-flex justify-space-between justify-md-center">
+        <div>
+          <p class="text-title mb-2">等级：<code>{{ details.status.level }}</code></p>
+          <p class="text-title mb-2">经验：<code>{{ details.status.exp}}</code></p>
+          <p class="text-title mb-2">看板：<code>{{ chars[details.status.secretary].name }}</code></p>
+          <p class="text-title mb-2">理智：<code>{{ details.status.ap }}</code> / <code>{{ details.status.maxAp }}</code></p>
+        </div>
+        <v-divider vertical :class="$vuetify.breakpoint.smAndDown ? '' : 'mx-9'" />
+        <div style="direction: rtl">
+          <p class="text-title mb-2">公招券：<code>{{ details.status.recruitLicense }}</code></p>
+          <p class="text-title mb-2">信用点：<code>{{ details.status.socialPoint}}</code></p>
+          <p class="text-title mb-2">龙门币：<code>{{ details.status.gold }}</code></p>
+        </div>
       </div>
     </v-card>
     <v-expansion-panels>
@@ -59,7 +68,7 @@
               <v-card flat class="my-3">
                 <v-row>
                   <v-col v-for="k in item['slots']" v-if="k" cols="12" md="3" lg="3" sm="6">
-                    <Character :char="details.troop.chars[k['charInstId']]"/>
+                    <Character :char="details.troop.chars[k['charInstId']]" :group="chars[details.troop.chars[k['charInstId']]['charId']].profession"/>
                   </v-col>
                 </v-row>
               </v-card>
@@ -159,7 +168,7 @@
     pointer-events: none !important
 </style>
 <script>
-import {apiConf, apiConfEdit, apiDetails, apiGetMapList, apiLog, apiScreenshots} from "@/plugins/axios";
+import {apiConf, apiConfEdit, apiDetails, apiGameLogin, apiGetMapList, apiLog, apiScreenshots} from "@/plugins/axios";
 import Character from "@/components/Character";
 import Divider from "@/components/Common/divider";
   export default {
@@ -201,7 +210,7 @@ import Divider from "@/components/Common/divider";
             this.maps.push({text: k, val: resp.data.mapDict[k]})
           }
         })
-        await apiConf(this.$route.params.account, this.$route.params.platform).then((resp)=>{
+        await apiConf(this.$route.query.account, this.$route.query.platform).then((resp)=>{
           if (resp.code) {
             this.ap = resp.data.keepingAP
             this.map = resp.data.mapId
@@ -213,7 +222,7 @@ import Divider from "@/components/Common/divider";
         })
       },
       async getScreen(){
-        await apiScreenshots(this.$route.params.account, this.$route.params.platform).then((resp) => {
+        await apiScreenshots(this.$route.query.account, this.$route.query.platform).then((resp) => {
           if (resp.code) {
             for (const k of resp.data) {
               this.screenshots.host = k.host
@@ -225,8 +234,8 @@ import Divider from "@/components/Common/divider";
         })
       },
       async loadData(){
-        if(this.$route.params.account && this.$store.state.user.isLogin){
-          apiDetails(this.$route.params.account, this.$route.params.platform).then((resp) => {
+        if(this.$route.query.account && this.$store.state.user.isLogin){
+          apiDetails(this.$route.query.account, this.$route.query.platform).then((resp) => {
             if (resp.code) {
               this.details = resp.data // troop
               this.info = [
@@ -242,23 +251,33 @@ import Divider from "@/components/Common/divider";
         }
       },
       submitEdit() {
-        apiConfEdit(this.$route.params.account, this.$route.params.platform, {
-          "account": this.$route.params.account,
+        apiConfEdit(this.$route.query.account, this.$route.query.platform, {
+          "account": this.$route.query.account,
           "isAutoBattle": this.autoBattle,
           "mapId": this.map,
-          "platform": this.$route.params.platform,
+          "platform": this.$route.query.platform,
           "keepingAP": Number(this.ap)
         }).then((resp) => {
           if (resp.code) {
-            this.$notify('托管配置修改成功')
-            //await this.loadData()
+            this.$notify('托管配置修改成功，自动重新登录游戏...')
+            apiGameLogin({
+              account: this.$route.query.account,
+              platform: this.$route.query.platform
+            }).then(async (resp) => {
+              if (resp.code) {
+                this.$notify('重新登录成功')
+              } else {
+                this.$notify({type: 'w', title: '重新登录异常', text: resp.message})
+              }
+            })
+            this.$router.push('/dashboard')
           } else {
             this.$notify({type: 'w', title: '修改托管配置失败', text: resp.message})
           }
         })
       },
       async getDetails(){
-        await apiLog(this.$route.params.account, this.$route.params.platform, 1)
+        await apiLog(this.$route.query.account, this.$route.query.platform, 1)
       }
     }
   }

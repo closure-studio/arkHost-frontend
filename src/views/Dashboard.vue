@@ -45,7 +45,7 @@
                 <td v-html="status(k.status)" />
                 <td>
                   <v-btn small color="warning" @click="login(k.config.account, k.config.platform)">登录</v-btn>
-                  <v-btn small color="info"  class="mx-2" @click="$router.push({name:'账号详情', params: {account: k.config.account, platform: k.config.platform}}).catch(err => {})">详情</v-btn>
+                  <v-btn small color="info"  class="mx-2" @click="$router.push({name:'账号详情', query: {account: k.config.account, platform: k.config.platform}}).catch(err => {})">详情</v-btn>
                   <v-btn small color="error" @click="del(k.config.account, k.config.platform)">删除</v-btn>
                 </td>
               </tr>

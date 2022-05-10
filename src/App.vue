@@ -27,7 +27,7 @@
 						<v-divider/><v-divider />
 					</v-subheader>
 					<v-list nav dense v-show="user.isLogin">
-						<v-list-item v-for="k in menu" @click="$router.push(k.event)" >
+						<v-list-item v-for="k in menu" @click="$router.push(k.event).catch(err => {})" >
 							<v-list-item-icon>
 								<v-icon>{{k.icon}}</v-icon>
 							</v-list-item-icon>
