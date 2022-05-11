@@ -5,12 +5,8 @@ import store from './store'
 import axios from './plugins/axios'
 import Notifications from 'vue-notification'
 import vuetify from './plugins/vuetify'
-
-
 import VueAxios from 'vue-axios'
-
 import '@/assets/index.css'
-
 Vue.config.productionTip = false
 Vue.use(Notifications)
 Vue.use(VueAxios, axios)
@@ -38,3 +34,4 @@ new Vue({
   vuetify,
   render: function (h) { return h(App) }
 }).$mount('#app')
+

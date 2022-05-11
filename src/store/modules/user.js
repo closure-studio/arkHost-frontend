@@ -2,6 +2,7 @@ const user = {
 	namespaced: true,
 	state: {
 		isLogin: false,
+		isAdmin: false,
 		lastLoginTs: 0
 	},
 	mutations: {

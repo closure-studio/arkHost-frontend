@@ -48,4 +48,8 @@ export const apiConf = (account, platform) => get(`Game/Config/${account}/${plat
 export const apiConfEdit = (account, platform, params) => post(`Game/Config/${account}/${platform}`, params) // UpdateConfig
 export const apiLog = (account, platform, index) => get(`Log/${account}/${platform}/${index}`) // Log
 export const apiScreenshots = (account, platform) => get(`Game/Screenshots/${account}/${platform}`) // GetScreen
-export const apiGetMapList = () => get(`System/maps`) // GetMapList
+export const apiGetMapList = () => get('System/maps') // GetMapList
+
+export const apiGetLog = () => get('System/LogFile') // GetLog
+export const apiGameDataUpdate = () => post('System/GameDataUpdate') // UpdateData
+export const apiEditAnnounce = (params) => post('System/Announcement', params) // EditAnnounce

@@ -1,11 +1,6 @@
 <template>
   <div>
-    <v-card class="my-4">
-      <v-card-title class="ml-2 orange--text">平台公告</v-card-title>
-      <div class="pb-4 ml-6">
-        <span class="text-h6" style="white-space:break-spaces">{{this.ann}}</span>
-      </div>
-    </v-card>
+    <Announce />
     <v-row>
       <v-col cols="12" md="4">
         <v-card>
@@ -63,10 +58,10 @@
 <script>
 import {apiAddGame, apiAnnounce, apiDelGame, apiGameLogin, apiListGame, apiScreen} from "@/plugins/axios";
 import Loading from "@/components/Common/Loading";
+import Announce from "@/components/Announce";
 export default {
-  components: {Loading},
+  components: {Loading, Announce},
   data:() => ({
-    ann: '登录后查看',
     server: [{id:0,name:'IOS'}, {id:1,name:'安卓官方'}, {id:2,name:'Bilibili'}],
     rule: [v => !!v || '!!!!!!!!!!!!!!'],
     selServer: {id:1},
@@ -104,7 +99,7 @@ export default {
         case 2:
           return '<span style="color:green">运行中</span>'
         case 3:
-          return '游戏错误'
+          return `${n.text}`
       }
     },
     addAccount(){
@@ -162,11 +157,6 @@ export default {
     }
   },
   async created() {
-    await apiAnnounce().then((resp) => {
-      if (resp.code) {
-        this.ann = resp.data
-      }
-    })
     await this.loadList()
   }
 }

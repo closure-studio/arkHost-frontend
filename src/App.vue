@@ -39,7 +39,12 @@
 							</v-list-item-icon>
 							<v-list-item-title>安全退出</v-list-item-title>
 						</v-list-item>
-
+            <v-list-item @click="$router.push('/master')" v-if="user.isAdmin">
+              <v-list-item-icon>
+                <v-icon>mdi-cog</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>管理后台</v-list-item-title>
+            </v-list-item>
 					</v-list>
 				</v-list-item-group>
 				<v-list nav dense v-show="!user.isLogin">
