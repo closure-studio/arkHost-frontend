@@ -35,3 +35,4 @@ new Vue({
   render: function (h) { return h(App) }
 }).$mount('#app')
 
+Vue.prototype.$items = require('./assets/data/item_table.json')

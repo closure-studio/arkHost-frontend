@@ -10,7 +10,9 @@ import Vuex from 'vuex'
 import persistedState from 'vuex-persistedstate'
 
 import user from "@/store/modules/user";
+import items from "@/store/modules/item";
 import config from "@/store/modules/config";
+//import item from "@/store/modules/item";
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -18,6 +20,6 @@ export default new Vuex.Store({
 		key: 'arkHost'
 	})],
 	modules: {
-		user, config
+		user, config, items
 	},
 });

@@ -9,6 +9,7 @@ import C from '../views/Cron.vue'
 import Con from '../views/Contributors.vue'
 import D from '../views/User/Details.vue'
 import His from '../views/History.vue'
+import M from '../views/Master/Index.vue'
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -28,5 +29,7 @@ export default new Router({
     path:'/contributors', component: Con, name: '内容贡献者'
   },{
     path:'/history', component: His, name: '更新记录'
+  },{
+    path:'/master', component: M, name: '管理后台'
   }]
 })

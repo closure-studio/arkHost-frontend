@@ -2,7 +2,7 @@
   <div>
     <v-card class="my-4">
       <v-card-title class="ml-2">托管详情
-        <span class="text--secondary ml-2">- {{$route.query.account.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}}</span>
+        <span class="text--secondary ml-2">- {{account.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}}</span>
         <v-spacer />
         <v-btn large tile class="mr-2" color="orange" outlined @click="model=true,getConf()">挂机配置</v-btn>
       </v-card-title>
@@ -82,11 +82,9 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <div class="item" :style="'grid-template-columns: repeat(auto-fill, minmax(' + ($vuetify.breakpoint.smAndDown ? '100' : '140') + 'px, 1fr));'">
-            <v-card v-for="(num, v) in details.inventory" v-if="num !== 0">
-              <v-img class="item-image" :src="'https://ak.dzp.me/dst/items/'+items['items'][v]['iconId']+'.webp'" />
-              <p class="item-content">{{ items['items'][v]['name'] }}</p>
-              <p class="item-count">× {{ num }}</p>
-            </v-card>
+            <div v-for="(num, v) in details.inventory" v-if="num !== 0">
+              <Item :num="num" :item="v"/>
+            </div>
           </div>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -123,56 +121,17 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-
+    <LocalLog v-if="showLog" :details="details" :account="this.account"/>
   </div>
 </template>
-<style lang="sass">
-  .item
-    display: grid
-    grid-gap: 1rem
-
-  .item-image
-    position: relative
-    left: 8px
-    width: 100px
-    height: 100px
-
-  .item-count
-    color: white
-    position: absolute
-    right: 0
-    top: 0
-    background-color: rgba(0, 0, 0, .6)
-    padding: 2.5px 5px
-    margin: 0
-    pointer-events: none !important
-
-  .item-content
-    color: white
-    position: absolute
-    right: 0
-    background-color: rgba(0, 0, 0, .6)
-    padding: 2.5px 5px
-    bottom: 0
-    margin-bottom: 0 !important
-    pointer-events: none !important
-
-  .item-time
-    color: white
-    position: absolute
-    right: 12px
-    bottom: 15px
-    background-color: rgba(0, 0, 0, .6)
-    padding: 2.5px 5px
-    margin: 0
-    pointer-events: none !important
-</style>
 <script>
 import {apiConf, apiConfEdit, apiDetails, apiGameLogin, apiGetMapList, apiLog, apiScreenshots} from "@/plugins/axios";
 import Character from "@/components/Character";
 import Divider from "@/components/Common/divider";
+import LocalLog from "@/components/LocalLog";
+import Item from "@/components/Item";
   export default {
-    components: {Divider, Character},
+    components: {Item, LocalLog, Divider, Character},
     data:() => ({
       details: {
         status: {},
@@ -182,7 +141,6 @@ import Divider from "@/components/Common/divider";
       },
       model: false,
       info: [],
-      items: [],
       map: '',
       maps: [],
       ap: '',
@@ -194,11 +152,18 @@ import Divider from "@/components/Common/divider";
       chars: [],
       tab: 0,
 
+      showLog: false
     }),
+    computed: {
+      account(){
+        return this.$route.query.account
+      },
+      platform(){
+        return this.$route.query.platform
+      }
+    },
     async created() {
       this.chars = require('../../assets/data/character_table.json')
-      this.items = await require('../../assets/data/item_table.json')
-      //console.log(this.items.items)
       await this.loadData()
       await this.getScreen()
       console.log('你有没有听见海猫的悲鸣?')
@@ -210,19 +175,19 @@ import Divider from "@/components/Common/divider";
             this.maps.push({text: k, val: resp.data.mapDict[k]})
           }
         })
-        await apiConf(this.$route.query.account, this.$route.query.platform).then((resp)=>{
+        await apiConf(this.account, this.platform).then((resp)=>{
           if (resp.code) {
             this.ap = resp.data.keepingAP
             this.map = resp.data.mapId
             this.autoBattle = resp.data.isAutoBattle
-            this.pause = resp.data.isPause
           } else {
             this.$notify({type: 'w', title: '获取信息失败', text: resp.message})
+            this.$router.push('/')
           }
         })
       },
       async getScreen(){
-        await apiScreenshots(this.$route.query.account, this.$route.query.platform).then((resp) => {
+        await apiScreenshots(this.account, this.platform).then((resp) => {
           if (resp.code) {
             for (const k of resp.data) {
               this.screenshots.host = k.host
@@ -234,14 +199,18 @@ import Divider from "@/components/Common/divider";
         })
       },
       async loadData(){
-        if(this.$route.query.account && this.$store.state.user.isLogin){
-          apiDetails(this.$route.query.account, this.$route.query.platform).then((resp) => {
+        if(this.account && this.$store.state.user.isLogin){
+          apiDetails(this.account, this.platform).then((resp) => {
             if (resp.code) {
               this.details = resp.data // troop
               this.info = [
                   this.details.status.androidDiamond, this.details.status.gachaTicket, this.details.status.tenGachaTicket,
                   'DIAMOND', 'TKT_GACHA', 'TKT_GACHA_10'
               ]
+              this.$store.dispatch('user/load',resp.data)
+              if (new Date().valueOf() / 1000 - this.$store.state.items[this.account][0].time > 1800) { // 30min
+                this.showLog = true
+              }
             } else {
               this.$notify({type: 'w', title: '获取信息失败', text: resp.message})
             }
@@ -251,18 +220,18 @@ import Divider from "@/components/Common/divider";
         }
       },
       submitEdit() {
-        apiConfEdit(this.$route.query.account, this.$route.query.platform, {
-          "account": this.$route.query.account,
+        apiConfEdit(this.account, this.platform, {
+          "account": this.account,
           "isAutoBattle": this.autoBattle,
           "mapId": this.map,
-          "platform": this.$route.query.platform,
+          "platform": this.platform,
           "keepingAP": Number(this.ap)
         }).then((resp) => {
           if (resp.code) {
             this.$notify('托管配置修改成功，自动重新登录游戏...')
             apiGameLogin({
-              account: this.$route.query.account,
-              platform: this.$route.query.platform
+              account: this.account,
+              platform: this.platform
             }).then(async (resp) => {
               if (resp.code) {
                 this.$notify('重新登录成功')
@@ -277,7 +246,7 @@ import Divider from "@/components/Common/divider";
         })
       },
       async getDetails(){
-        await apiLog(this.$route.query.account, this.$route.query.platform, 1)
+        await apiLog(this.account, this.platform, 1)
       }
     }
   }
