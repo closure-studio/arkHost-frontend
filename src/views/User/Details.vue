@@ -208,7 +208,13 @@ import Item from "@/components/Item";
                   'DIAMOND', 'TKT_GACHA', 'TKT_GACHA_10'
               ]
               this.$store.dispatch('user/load',resp.data)
-              if (new Date().valueOf() / 1000 - this.$store.state.items[this.account][0].time > 1800) { // 30min
+              if (this.$store.state.items[this.account] === undefined) {
+                this.$store.dispatch('items/logs', {
+                  account: this.account,
+                  status: this.details.status,
+                  items: this.details['inventory']
+                })
+              } else if (new Date().valueOf() / 1000 - this.$store.state.items[this.account][0].time > 1800) { // 30min
                 this.showLog = true
               }
             } else {
