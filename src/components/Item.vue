@@ -2,6 +2,7 @@
   <v-card v-if="num !== 0">
     <v-img class="item-image" :src="'https://ak.dzp.me/dst/items/' + $items['items'][item]['iconId'] + '.webp'" />
     <p class="item-content">{{ $items['items'][item]['name'] }}</p>
+    <p class="item-time" v-if="ts > 0">🕜{{ formatDate(ts) }}</p>
     <p class="item-count">× {{ num }}<span class="blue--text" v-if="add"> ( {{ add }} )</span></p>
   </v-card>
 </template>
@@ -39,9 +40,9 @@
 .item-time
   color: white
   position: absolute
-  right: 12px
+  right: 0
   bottom: 15px
-  background-color: rgba(0, 0, 0, .6)
+  background-color: #00796b99
   padding: 2.5px 5px
   margin: 0
   pointer-events: none !important
@@ -52,6 +53,10 @@
       item: '',
       num: '',
       add: '',
+      ts: {
+        type: Number,
+        default: 0
+      }
     },
   }
 </script>

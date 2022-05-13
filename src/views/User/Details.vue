@@ -88,6 +88,20 @@
           </div>
         </v-expansion-panel-content>
       </v-expansion-panel>
+      <v-expansion-panel>
+        <v-expansion-panel-header>
+          消耗品统计
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <div class="item" :style="'grid-template-columns: repeat(auto-fill, minmax(' + ($vuetify.breakpoint.smAndDown ? '100' : '150') + 'px, 1fr));'">
+            <div v-for="(data, name) in details.consumable" v-if="data !== {}" style="display: contents">
+              <div v-for="info in data" v-if="info['count'] !== 0">
+                <Item :num="info['count']" :item="name" :ts="info['ts']"/>
+              </div>
+            </div>
+          </div>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
     </v-expansion-panels>
     <v-dialog v-model="model" width="450">
       <v-card>
