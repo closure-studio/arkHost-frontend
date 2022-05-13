@@ -15,7 +15,7 @@
       </v-toolbar>
       <v-list three-line subheader>
         <div class="text-center mt-4">
-          <span class="text-h4 blue--text">在过去 {{ ((new Date().valueOf() / 1000 - old.time) / 3600).toFixed(2) }} 小时里</span><br>
+          <span class="text-h4 blue--text">在过去 {{ ((new Date().valueOf() / 1000 - old.time) / 3600).toFixed(5) }} 小时里</span><br>
           <span class="text-h6 text--secondary">你的账号发生了这样的变化</span>
         </div>
         <span class="text-h6 ml-4 orange--text">基础信息</span>

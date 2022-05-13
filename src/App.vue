@@ -16,7 +16,7 @@
 									<v-list-item-title>托管列表</v-list-item-title>
 								</v-list-item-content>
 							</template>
-							<v-list-item @click="$router.push({name:'账号详情', params: {account: k.config.account, platform: k.config.platform}}).catch(err => {})" v-for="k in list">
+							<v-list-item @click="$router.push({name:'账号详情', query: {account: k.config.account, platform: k.config.platform}}).catch(err => {})" v-for="k in list">
 								<v-list-item-content>
 									<v-list-item-title>{{k.config.account.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')}}</v-list-item-title>
 								</v-list-item-content>
