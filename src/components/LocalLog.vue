@@ -15,7 +15,7 @@
       </v-toolbar>
       <v-list three-line subheader>
         <div class="text-center mt-4">
-          <span class="text-h4 blue--text">在过去 {{ ((new Date().valueOf() / 1000 - old.time) / 3600).toFixed(5) }} 小时里</span><br>
+          <span class="text-h4 blue--text">在过去 {{ ((new Date().valueOf() / 1000 - old.time) / 3600).toFixed(2) }} 小时里</span><br>
           <span class="text-h6 text--secondary">你的账号发生了这样的变化</span>
         </div>
         <span class="text-h6 ml-4 orange--text">基础信息</span>
@@ -75,8 +75,6 @@
       }
     },
     created() {
-      //console.log(this.old.status)
-      //return
       for (const k in this.details.status) {
         const map = {'exp': 'EXP_PLAYER', 'socialPoint': 'SOCIAL_PT', 'gachaTicket': 'TKT_GACHA', 'tenGachaTicket': 'TKT_GACHA_10', 'recruitLicense': 'TKT_RECRUIT', 'ap': 'AP_GAMEPLAY', 'gold': 'GOLD'}
         if (map[k]) {
@@ -92,11 +90,16 @@
           this.diff.items[k] = [this.details['inventory'][k], this.old.items[k]]
         }
       }
-      this.$store.dispatch('items/logs', {
-        account: this.account,
-        status: this.details.status,
-        items: this.details['inventory']
-      })
+    },
+    watch: {
+      dialog(v) {
+        if (!v)
+          this.$store.dispatch('items/logs', {
+            account: this.account,
+            status: this.details.status,
+            items: this.details['inventory']
+          })
+      }
     }
   }
 </script>
