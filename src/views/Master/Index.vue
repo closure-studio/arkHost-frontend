@@ -5,8 +5,11 @@
     <v-btn block large class="mt-3" @click="save">保存内容</v-btn>
     <Divider msg="日志分析" class="py-4"/>
     <v-alert type="info" dense outlined v-if="$vuetify.breakpoint.smAndDown">加载日志前请确保设备处于横屏状态</v-alert>
-    <v-btn @click="load" large>加载最近日志</v-btn>
-    <v-btn @click="exports" large class="ml-4" :class="$vuetify.breakpoint.smAndDown ? 'float-end' : ''">保存日志到本地</v-btn>
+    <div class="d-flex justify-space-between justify-md-start ">
+    <v-btn @click="load(0)" large>加载日志</v-btn>
+    <v-btn @click="load(1)" large class="mx-2">加载倒叙日志</v-btn>
+    <v-btn @click="exports" large >保存日志</v-btn>
+    </div>
     <pre class="mt-4">{{ log }}</pre>
   </div>
 </template>
@@ -17,6 +20,7 @@
     white-space: pre-wrap;
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
     padding: 0.75em 1em;
+    overflow: auto;
   }
 </style>
 <script>
@@ -36,9 +40,14 @@
       })
     },
     methods: {
-      load() {
+      load(t) {
         apiGetLog().then((resp) => {
-          this.log = resp
+          if(t){
+            const arr = resp.split('\n').reverse()
+            arr.shift()
+            resp = arr.join('\n')
+          }
+          this.log =  resp
         })
       },
       exports() {

@@ -31,7 +31,7 @@
           <p class="text-title mb-2">等级：<code>{{ details.status.level }}</code></p>
           <p class="text-title mb-2">经验：<code>{{ details.status.exp}}</code></p>
           <p class="text-title mb-2">看板：<code>{{ chars[details.status.secretary].name }}</code></p>
-          <p class="text-title mb-2">理智：<code>{{ details.status.ap }}</code> / <code>{{ details.status.maxAp }}</code></p>
+          <p class="text-title mb-2">理智：<code>{{ ap }}</code> / <code>{{ details.status.maxAp }}</code></p>
         </div>
         <v-divider vertical :class="$vuetify.breakpoint.smAndDown ? '' : 'mx-9'" />
         <div style="direction: rtl">
@@ -121,7 +121,7 @@
                     hide-details
                     :menu-props="{ offsetY: true }"
                 ></v-select>
-                <v-text-field label="理智保留" v-model="ap" persistent-hint :hint="'当前等级最大自然恢复理智为 ' + details.status.maxAp" class="mt-3"></v-text-field>
+                <v-text-field label="理智保留" v-model="keepAp" persistent-hint :hint="'当前等级最大自然恢复理智为 ' + details.status.maxAp" class="mt-3"></v-text-field>
                 <div class="d-flex justify-space-between">
                   <v-switch
                       v-model="autoBattle"
@@ -157,7 +157,7 @@ import Item from "@/components/Item";
       info: [],
       map: '',
       maps: [],
-      ap: '',
+      keepAp: '',
       autoBattle: true,
       screenshots: {
         host: '',
@@ -174,6 +174,15 @@ import Item from "@/components/Item";
       },
       platform(){
         return this.$route.query.platform
+      },
+      ap(){
+        const t = this.details.status
+        if(t.ap >= t['maxAp']){
+          return t.ap
+        }
+        console.log(t.ap, Math.floor((new Date().getTime() / 1000 - t['lastApAddTime']) / 360))
+        const _ap = t.ap + Math.floor((new Date().getTime() / 1000 - t['lastApAddTime']) / 360)
+        return _ap > t['maxAp'] ? t['maxAp'] : _ap
       }
     },
     async created() {
@@ -191,7 +200,7 @@ import Item from "@/components/Item";
         })
         await apiConf(this.account, this.platform).then((resp)=>{
           if (resp.code) {
-            this.ap = resp.data.keepingAP
+            this.keepAp = resp.data.keepingAP
             this.map = resp.data.mapId
             this.autoBattle = resp.data.isAutoBattle
           } else {
@@ -245,7 +254,7 @@ import Item from "@/components/Item";
           "isAutoBattle": this.autoBattle,
           "mapId": this.map,
           "platform": this.platform,
-          "keepingAP": Number(this.ap)
+          "keepingAP": Number(this.keepAp)
         }).then((resp) => {
           if (resp.code) {
             this.$notify('托管配置修改成功，自动重新登录游戏...')
