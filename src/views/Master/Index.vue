@@ -1,5 +1,12 @@
 <template>
   <div>
+    <Divider msg="系统状态" class="py-4"/>
+    <div class="item" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));">
+      <v-card v-for="(v, k) in status" class="pa-5 ">
+        <span class="text--secondary">{{k}}: </span><span class="float-right">{{v}}</span>
+      </v-card>
+    </div>
+    <v-btn block large class="mt-3" @click="getStatus">刷新</v-btn>
     <Divider msg="公告管理" class="py-4"/>
     <v-textarea rows="5" outlined label="公告编辑" v-model="ann" hide-details></v-textarea>
     <v-btn block large class="mt-3" @click="save">保存内容</v-btn>
@@ -11,7 +18,7 @@
     <v-btn @click="exports" large >保存日志</v-btn>
     </div>
     <pre class="mt-4">{{ log }}</pre>
-  </div>
+  </div >
 </template>
 <style>
   pre {
@@ -24,12 +31,13 @@
   }
 </style>
 <script>
-  import {apiAnnounce, apiEditAnnounce, apiGetLog} from "@/plugins/axios";
+import {apiAnnounce, apiEditAnnounce, apiGetLog, apiStatus} from "@/plugins/axios";
   import Divider from "@/components/Common/divider";
   export default {
     components: {Divider},
     data: () => ({
       ann: '',
+      status: {},
       log: '...'
     }),
     async created() {
@@ -38,8 +46,17 @@
           this.ann = resp.data
         }
       })
+      await this.getStatus()
     },
     methods: {
+      async getStatus() {
+        await apiStatus().then((resp) => {
+          if (resp.code) {
+            this.status = resp.data
+            this.$notify({type: 's', title: '状态信息获取成功'})
+          }
+        })
+      },
       load(t) {
         apiGetLog().then((resp) => {
           if(t){

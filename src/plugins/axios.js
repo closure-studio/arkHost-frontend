@@ -53,3 +53,4 @@ export const apiGetMapList = () => get('System/maps') // GetMapList
 export const apiGetLog = () => get('System/LogFile') // GetLog
 export const apiGameDataUpdate = () => post('System/GameDataUpdate') // UpdateData
 export const apiEditAnnounce = (params) => post('System/Announcement', params) // EditAnnounce
+export const apiStatus = () => get('System/Status') // Status
