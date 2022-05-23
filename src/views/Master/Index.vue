@@ -1,7 +1,7 @@
 <template>
   <div>
     <Divider msg="系统状态" class="py-4"/>
-    <div class="item" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));">
+    <div class="item" style="grid-template-columns: repeat(auto-fill, minmax(198px, 1fr));">
       <v-card v-for="(v, k) in status" class="pa-5 ">
         <span class="text--secondary">{{k}}: </span><span class="float-right">{{v}}</span>
       </v-card>
