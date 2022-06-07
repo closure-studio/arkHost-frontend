@@ -194,8 +194,8 @@ import Item from "@/components/Item";
     methods:{
       async getConf(){
         await apiGetMapList().then((resp) => {
-          for(const k in resp.data.mapDict){
-            this.maps.push({text: k, val: resp.data.mapDict[k]})
+          for(const k in resp.data){
+            this.maps.push({text: k, val: resp.data[k]})
           }
         })
         await apiConf(this.account, this.platform).then((resp)=>{
