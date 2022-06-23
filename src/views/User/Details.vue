@@ -254,7 +254,8 @@ import Item from "@/components/Item";
           "isAutoBattle": this.autoBattle,
           "mapId": this.map,
           "platform": this.platform,
-          "keepingAP": Number(this.keepAp)
+          "keepingAP": Number(this.keepAp),
+          "isStopped":false
         }).then((resp) => {
           if (resp.code) {
             this.$notify('托管配置修改成功，自动重新登录游戏...')
