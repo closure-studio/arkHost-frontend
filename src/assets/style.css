@@ -1,0 +1,47 @@
+::-webkit-scrollbar {
+  width: 6px;
+  height: 10px;
+}
+::-webkit-scrollbar-track:hover {
+  background: rgba(79, 111, 127, 0.05);
+}
+::-webkit-scrollbar-thumb {
+  background-color: #b4c7d0;
+
+  background-clip: padding-box;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #4f6f7f;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #3a5169;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 100px rgb(33, 33, 33) inset !important;
+  -webkit-text-fill-color: #fff !important;
+}
+pre {
+  background-color: #333;
+  color: #fff;
+  font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
+  padding: 0.75em 1em;
+  overflow: auto;
+  white-space: nowrap;
+}
+td,
+th {
+  white-space: nowrap !important;
+}
+.nav-inactive {
+  @apply border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100;
+}
+.nav-active {
+  @apply bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100;
+}
+.nav-side {
+  @apply fixed inset-y-0 left-0 z-30 w-64 transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0;
+}
+.qbz-input {
+  @apply input input-bordered w-full focus:outline-none focus:border-info;
+}

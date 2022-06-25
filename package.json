@@ -1,0 +1,34 @@
+{
+  "name": "arkhost-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prettier": "prettier --write ."
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.2",
+    "axios": "^0.27.2",
+    "daisyui": "^2.15.4",
+    "mosha-vue-toastify": "^1.0.23",
+    "pinia": "^2.0.14",
+    "pinia-persists": "^1.2.0",
+    "prettier": "^2.7.1",
+    "vite-plugin-compression": "^0.5.1",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.16",
+    "vue3-click-away": "^1.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.3",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.1.3",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9",
+    "vite-plugin-pwa": "^0.12.0",
+    "vue-tsc": "^0.34.7"
+  }
+}
