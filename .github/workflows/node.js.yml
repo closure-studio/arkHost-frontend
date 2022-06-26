@@ -37,5 +37,5 @@ jobs:
         vercel-token: v9u3xZyfX8QDJoO4iAOd41Ze
         vercel-org-id: ACvNqWav658U9oQcaYNOXJod
         vercel-project-id: prj_UjQxxrFX0KSRKjjdqBRbN3B5o6xO
-        working-directory: ./dist
+        working-directory: ./
         vercel-args: '--prod' # 可不填
