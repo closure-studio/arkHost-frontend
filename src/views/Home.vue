@@ -10,7 +10,7 @@
           height="128px"
           class="mt-5"
       />
-      <span class="text-h4">可露希尔云挂机 本次部署来自Github Action * 2</span>
+      <span class="text-h4">可露希尔云挂机</span>
       <span class="subtitle-1 text--secondary">云手机全自动远程托管</span>
     </div>
     <div class="d-flex justify-space-around pt-9">
