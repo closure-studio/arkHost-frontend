@@ -6,7 +6,7 @@
       <h1
         class="text-3xl font-extrabold text-transparent sm:text-5xl bg-clip-text bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 flex flex-col"
       >
-        <span>可露希尔云挂机平台 本次部署来自Github Action</span>
+        <span>可露希尔云挂机平台</span>
         <span class="sm:block text-xl lg:text-2xl">
           基于云手机全自动远程托管
         </span>
