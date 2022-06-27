@@ -28,7 +28,6 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
     - name: Deploy to Vercel
       uses: amondnet/vercel-action@master
       env:
