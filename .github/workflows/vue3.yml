@@ -1,0 +1,40 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: vue3 CI
+
+on:
+  push:
+    branches: [ "vue3" ]
+  pull_request:
+    branches: [ "vue3" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@master
+      env:
+        VERSION: ${{ env.GITHUB_SHA }}
+      with:
+        vercel-token: v9u3xZyfX8QDJoO4iAOd41Ze
+        vercel-org-id: ACvNqWav658U9oQcaYNOXJod
+        vercel-project-id: prj_jAlwxE3eyjdyEF1f2GXxlNeysq10
+        working-directory: ./
+        vercel-args: '--prod' # 可不填
