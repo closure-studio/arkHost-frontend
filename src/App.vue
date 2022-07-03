@@ -16,7 +16,7 @@ const { user } = storeToRefs(_user);
 const $axios =
   getCurrentInstance().appContext.config.globalProperties.$axios.defaults;
 if (user.value.isLogin) {
-  $axios.headers["Authorization"] = "Bearer " + user.value.token;
+  $axios.headers["Authorization"] = user.value.token;
 }
 
 onMounted(() => {
