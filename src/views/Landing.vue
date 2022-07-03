@@ -13,10 +13,10 @@
       </h1>
       <div class="flex justify-center gap-4 mt-8">
         <router-link
-          to="/login"
+          :to="user.isLogin ? '/home' : '/login'"
           class="btn btn-info btn-outline px-12 py-3 w-auto active:text-opacity-75"
         >
-          用户登录
+          {{ user.isLogin ? '进入面板' : '用户登录' }}
         </router-link>
         <a
           href="https://jq.qq.com/?_wv=1027&k=FiJjOEe8"
@@ -33,7 +33,7 @@
         <img
           class="absolute inset-0 object-cover w-full h-full"
           src="https://ak.nai-ve.com/img/login.58a0ee4e.webp"
-          alt="Man using a computer"
+          alt="skadiD here"
         />
       </div>
       <div class="lg:py-24">
@@ -67,3 +67,12 @@
     </div>
   </div>
 </template>
+<script setup>
+  import {userStore} from "../store/user";
+  import {storeToRefs} from "pinia/dist/pinia";
+
+  const _user = userStore()
+  const {user} = storeToRefs(_user)
+
+
+</script>

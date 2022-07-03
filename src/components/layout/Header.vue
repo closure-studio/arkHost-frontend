@@ -17,10 +17,10 @@
           />
         </svg>
       </div>
-      <div class="navbar-center text-lg ml-2" v-if="isLarge">
+      <div class="navbar-center text-lg text-info ml-2" v-if="isLarge">
         <div class="text-lg breadcrumbs">
           <ul>
-            <li><a>可露希尔</a></li>
+            <li><router-link to="/">可露希尔</router-link></li>
             <li>
               <a>{{ $route.meta["title"] }}</a>
             </li>

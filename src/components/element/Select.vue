@@ -12,7 +12,7 @@
           aria-haspopup="listbox"
           aria-expanded="true"
           aria-labelledby="listbox-label"
-          class="cursor-pointer relative w-full rounded-md border bg-base-300 pl-3 pr-10 py-3 text-left
+          class="cursor-pointer relative w-full rounded-md border bg-base-300 pl-4 pr-10 py-3 text-left
           focus:outline-none hover:border-info
           transition ease-in-out duration-150 sm:leading-5"
         >
@@ -44,7 +44,7 @@
             role="option"
             v-for="d in data"
             v-bind:key="d"
-            class="cursor-default select-none relative py-2 pl-3 pr-9 cursor-pointer hover:bg-indigo-400 focus:outline-none focus:bg-indigo-400"
+            class="cursor-default select-none relative py-2 pl-4 pr-9 cursor-pointer hover:bg-indigo-400 hover:text-info focus:outline-none"
           >
             <div class="flex items-center space-x-3">
               <span
