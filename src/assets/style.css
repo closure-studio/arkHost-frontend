@@ -21,14 +21,6 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 100px rgb(33, 33, 33) inset !important;
   -webkit-text-fill-color: #fff !important;
 }
-pre {
-  background-color: #333;
-  color: #fff;
-  font-family: Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace;
-  padding: 0.75em 1em;
-  overflow: auto;
-  white-space: nowrap;
-}
 td,
 th {
   white-space: nowrap !important;
@@ -43,5 +35,8 @@ th {
   @apply fixed inset-y-0 left-0 z-30 w-64 transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0;
 }
 .qbz-input {
-  @apply input input-bordered w-full focus:outline-none focus:border-info;
+  @apply input border-white w-full focus:outline-none focus:border-info hover:border-info;
+}
+.ark-card {
+  @apply card w-full bg-base-100 shadow-xl p-5 rounded-md
 }

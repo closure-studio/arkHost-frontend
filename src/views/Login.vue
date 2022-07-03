@@ -75,7 +75,7 @@ if (user.value.isLogin) {
       instance.appContext.config.globalProperties.$axios.defaults.headers[
         "Authorization"
       ] = resp.data.token;
-      router.push(route.query.redirect ? route.query.redirect : "/");
+      router.push(route.query.redirect ? route.query.redirect : "/home");
       return;
     }
     load.value = false;
@@ -117,7 +117,7 @@ const login = () => {
       instance.appContext.config.globalProperties.$axios.defaults.headers[
         "Authorization"
       ] = resp.data.token;
-      router.push(route.query.redirect ? route.query.redirect : "/");
+      router.push(route.query.redirect ? route.query.redirect : "/home");
       return;
     }
     createToast("错误的登录信息：" + resp.message, {

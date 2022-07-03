@@ -4,7 +4,7 @@ import { userStore } from "../store/user";
 import { useRouter } from "vue-router";
 
 const service = axios.create({
-  baseURL: "https://api.arknights.host/",
+  baseURL: localStorage.getItem('host') || "https://api.arknights.host/",
 });
 service.interceptors.response.use(
   (response) => {
