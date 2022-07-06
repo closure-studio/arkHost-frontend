@@ -14,13 +14,13 @@
         <v-alert outlined dense type="success" v-else>欢迎回来：<code>Dr.{{details.status.nickName}}</code> 上次登录：<code>{{ formatDate(details.status.lastOnlineTs, true) }}</code></v-alert>
       </v-row>
       <v-row class="mb-3 mx-6">
-        <v-col cols="6" md="4" lg="4" v-for="k in 3" class="px-0">
+        <v-col cols="6" md="3" lg="3" v-for="k in 4" class="px-0">
           <div class="px-3">
-            <v-chip :color="['warning', 'error', 'success'][k-1]" large label style="width: 100%" link outlined>
+            <v-chip :color="['warning', 'error', 'success','success'][k-1]" large label style="width: 100%" link outlined>
               <v-avatar size="36" left>
-                <img :src="'https://ak.dzp.me/dst/items/'+info[k+2]+'.webp'">
+                <img :src="'https://ak.dzp.me/dst/items/'+info[k+3]+'.webp'">
               </v-avatar>
-              {{['源石', '单抽券', '十连券'][k-1]}}:{{info[k-1]}}
+              {{['源石', '合成玉' , '单抽券', '十连券'][k-1]}}:{{info[k-1]}}
             </v-chip>
           </div>
         </v-col>
@@ -227,8 +227,8 @@ import Item from "@/components/Item";
             if (resp.code) {
               this.details = resp.data // troop
               this.info = [
-                  this.details.status.androidDiamond, this.details.status.gachaTicket, this.details.status.tenGachaTicket,
-                  'DIAMOND', 'TKT_GACHA', 'TKT_GACHA_10'
+                  this.details.status.androidDiamond, this.details.status.diamondShard, this.details.status.gachaTicket, this.details.status.tenGachaTicket,
+                  'DIAMOND','DIAMOND_SHD','TKT_GACHA', 'TKT_GACHA_10'
               ]
               this.$store.dispatch('user/load',resp.data)
               if (this.$store.state.items[this.account] === undefined) {
@@ -254,7 +254,8 @@ import Item from "@/components/Item";
           "isAutoBattle": this.autoBattle,
           "mapId": this.map,
           "platform": this.platform,
-          "keepingAP": Number(this.keepAp)
+          "keepingAP": Number(this.keepAp),
+          "isStopped": false
         }).then((resp) => {
           if (resp.code) {
             this.$notify('托管配置修改成功，自动重新登录游戏...')
