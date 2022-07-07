@@ -34,12 +34,13 @@
               <tbody>
               <tr v-for="(k,v) in gameList" class="text-center">
                 <td>{{ v+1 }}</td>
-                <td>{{ k.config.account.replace(/(\d{3})\d{4}(\d{4})/, '$1囗囗囗囗$2') }}</td>
+                <td>{{ k.config.account.replace(/(\d{3})\d{6}(\d{2})/, '$1****$2') }}</td>
                 <td>{{ serverList[k.config.platform] }}</td>
                 <td>{{ k.config['isPause'] ? '暂停': '运行中'}}</td>
                 <td v-html="status(k.status)" />
                 <td>
-                  <v-btn small color="warning" @click="login(k.config.account, k.config.platform)">登录</v-btn>
+                  <v-btn small :color="k.config['isPause'] || k.status.code !== 2 ? 'green' : 'warning'" @click="login(k.config.account, k.config.platform, k.config['isPause'] || k.status.code !== 2)">
+                    {{ k.config['isPause'] || k.status.code !== 2 ? '登录' : '暂停' }}</v-btn>
                   <v-btn small color="info"  class="mx-2" @click="$router.push({name:'账号详情', query: {account: k.config.account, platform: k.config.platform}}).catch(err => {})">详情</v-btn>
                   <v-btn small color="error" @click="del(k.config.account, k.config.platform)">删除</v-btn>
                 </td>
@@ -56,7 +57,16 @@
   </div>
 </template>
 <script>
-import {apiAddGame, apiAnnounce, apiDelGame, apiGameLogin, apiListGame, apiScreen} from "@/plugins/axios";
+import {
+  apiAddGame,
+  apiAnnounce,
+  apiConf,
+  apiConfEdit,
+  apiDelGame,
+  apiGameLogin,
+  apiListGame,
+  apiScreen
+} from "@/plugins/axios";
 import Loading from "@/components/Common/Loading";
 import Announce from "@/components/Announce";
 export default {
@@ -130,18 +140,43 @@ export default {
         }
       })
     },
-    login(ac, pf){
-      apiGameLogin({
-        account: ac,
-        platform: pf
-      }).then(async (resp) => {
-        if (resp.code) {
-          this.$notify('操作成功')
-        } else {
-          this.$notify({type: 'w', title: '操作失败', text: resp.message})
-        }
-        await this.loadList()
-      })
+    login(ac, pf, isStop){
+      if (isStop) {
+        apiGameLogin({
+          account: ac,
+          platform: pf
+        }).then(async (resp) => {
+          if (resp.code) {
+            this.$notify('操作成功，请稍后自行刷新查看结果')
+          } else {
+            this.$notify({type: 'w', title: '操作失败', text: resp.message})
+          }
+          await this.loadList()
+        })
+      } else {
+        this.$notify('暂停请求中，请稍后')
+        apiConf(ac, pf).then((resp) => {
+          if (resp.code) {
+            apiConfEdit(ac, pf, {
+              "account": ac,
+              "platform": pf,
+              "isAutoBattle": resp.data.isAutoBattle,
+              "mapId": resp.data.mapId,
+              "keepingAP": Number(resp.data.keepingAP),
+              "isStopped": true
+            }).then(async (resp) => {
+              if (resp.code) {
+                this.$notify({type: 's', text: '暂停托管成功'})
+                await this.loadList()
+              } else {
+                this.$notify({type: 'w', title: '试图暂停失败', text: resp.message})
+              }
+            })
+          } else {
+            this.$notify({type: 'w', title: '试图暂停失败', text: resp.message})
+          }
+        })
+      }
     },
     async loadList() {
       this.overlay2 = true
