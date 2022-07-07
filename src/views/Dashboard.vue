@@ -1,6 +1,15 @@
 <template>
   <div>
     <Announce />
+    <v-alert
+        dismissible
+        color="success"
+        outlined
+        v-ripple
+        class="text-center"
+        @click="github"
+        v-if="!Github"
+    ><span class="text-h6 align-center">拯救可露希爾，點擊 Github 送 star -></span></v-alert>
     <v-row>
       <v-col cols="12" md="4">
         <v-card>
@@ -81,9 +90,14 @@ export default {
     overlay2: false,
     head: ['序号', '账号', '所属平台', '运行状态', '账号状态', '操作'],
     gameList: [],
-    serverList: ['IOS','官服','B服']
+    serverList: ['IOS','官服','B服'],
+    Github: localStorage.getItem('github')
   }),
   methods:{
+    github(){
+      window.open('https://github.com/closure-studio/ReadMe', '_blank')
+      localStorage.setItem('github', 'true')
+    },
     del(ac, pf){
       this.$emit('alert','真的要删除账号吗?', () =>{
         apiDelGame({
