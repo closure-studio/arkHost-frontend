@@ -226,7 +226,7 @@ import Item from "@/components/Item";
     methods:{
       async loadLog(){
         await apiGameLog(this.account, this.platform, 0).then((resp) => {
-          this.log = resp.data
+          this.log = resp.data.reverse()
         })
       },
       async getConf(){
