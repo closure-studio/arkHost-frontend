@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Vue from "vue";
 
-axios.defaults.baseURL = "https://api.arknights.host/"
+axios.defaults.baseURL = "https://dev.api.arknights.host/"
 axios.interceptors.response.use(response => {
 	return response.data
 }, err => {
