@@ -15,18 +15,20 @@ Vue.prototype.formatDate = function (value, details = false) {
   let y = date.getFullYear().toString(),
       m = date.getMonth() + 1,
       d = date.getDate();
-  let h, min;
+  let h, min, second;
   if (details) {
     h = date.getHours()
     min = date.getMinutes()
+    second = date.getSeconds()
     if (h < 10) h = '0' + h;
     if (min < 10) min = '0' + min;
+    if (second < 10) second = '0' + second;
   }
   if (m < 10) m = '0' + m;
   if (d < 10) d = '0' + d;
   y = y.substring(y.length - 2)
   let str = y + '-' + m + '-' + d + ' '
-  return details ? str + h + ':' + min : str
+  return details ? str + h + ':' + min + ':' + second : str
 }
 new Vue({
   router,

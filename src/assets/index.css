@@ -6,10 +6,13 @@
 .v-navigation-drawer__border{
     width: 0;
 }
-
 ::-webkit-scrollbar {
-    width: 0;
-    height: 0
+    width: 6px;   /* 滚动条宽度， width：对应竖滚动条的宽度  height：对应横滚动条的高度*/
+    background: #3c3c41;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: #8c8b8b;
 }
 .vue-notification-group {
     margin-top: 12px;

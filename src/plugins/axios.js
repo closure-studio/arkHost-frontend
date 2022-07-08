@@ -45,6 +45,7 @@ export const apiDelGame = params => del('Game', params) // Del
 export const apiScreen = (account, platform) => get(`Game/Screenshot/${account}/${platform}`) // GetScreen
 export const apiDetails = (account, platform) => get(`Game/${account}/${platform}`) // GetDetails
 export const apiConf = (account, platform) => get(`Game/Config/${account}/${platform}`) // GetConf
+export const apiGameLog = (account, platform, ts) => get(`Game/Log/${account}/${platform}/${ts}`) // GetLog
 export const apiConfEdit = (account, platform, params) => post(`Game/Config/${account}/${platform}`, params) // UpdateConfig
 export const apiLog = (account, platform, index) => get(`Log/${account}/${platform}/${index}`) // Log
 export const apiScreenshots = (account, platform) => get(`Game/Screenshots/${account}/${platform}`) // GetScreen

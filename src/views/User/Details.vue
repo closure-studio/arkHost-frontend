@@ -44,6 +44,27 @@
     <v-expansion-panels>
       <v-expansion-panel>
         <v-expansion-panel-header>
+          超实时日志
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-simple-table style="max-height: 400px; overflow: auto">
+            <template v-slot:default>
+              <thead><tr>
+                <th class="text-left">时间</th>
+                <th class="text-left">事件</th>
+              </tr></thead>
+              <tbody>
+                <tr v-for="item in log">
+                  <td class="orange--text">{{ formatDate(item.ts, 1) }}</td>
+                  <td>{{ item.info }}</td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+      <v-expansion-panel>
+        <v-expansion-panel-header>
           不实时截图
         </v-expansion-panel-header>
         <v-expansion-panel-content>
@@ -139,7 +160,16 @@
   </div>
 </template>
 <script>
-import {apiConf, apiConfEdit, apiDetails, apiGameLogin, apiGetMapList, apiLog, apiScreenshots} from "@/plugins/axios";
+import {
+  apiConf,
+  apiConfEdit,
+  apiDetails,
+  apiGameLog,
+  apiGameLogin,
+  apiGetMapList,
+  apiLog,
+  apiScreenshots
+} from "@/plugins/axios";
 import Character from "@/components/Character";
 import Divider from "@/components/Common/divider";
 import LocalLog from "@/components/LocalLog";
@@ -166,7 +196,8 @@ import Item from "@/components/Item";
       chars: [],
       tab: 0,
 
-      showLog: false
+      showLog: false,
+      log: []
     }),
     computed: {
       account(){
@@ -188,10 +219,16 @@ import Item from "@/components/Item";
     async created() {
       this.chars = require('../../assets/data/character_table.json')
       await this.loadData()
+      await this.loadLog()
       await this.getScreen()
       console.log('你有没有听见海猫的悲鸣?')
     },
     methods:{
+      async loadLog(){
+        await apiGameLog(this.account, this.platform, 0).then((resp) => {
+          this.log = resp.data
+        })
+      },
       async getConf(){
         await apiGetMapList().then((resp) => {
           for(const k in resp.data){
