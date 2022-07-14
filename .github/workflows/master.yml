@@ -34,7 +34,7 @@ jobs:
       env:
         VERSION: ${{ env.GITHUB_SHA }}
       with:
-        vercel-token: v9u3xZyfX8QDJoO4iAOd41Ze
+        vercel-token: ${{ secrets.VERCELTOKEN }}
         vercel-org-id: ACvNqWav658U9oQcaYNOXJod
         vercel-project-id: prj_UjQxxrFX0KSRKjjdqBRbN3B5o6xO
         working-directory: ./
