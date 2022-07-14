@@ -40,7 +40,10 @@
 	import {apiLogin} from "@/plugins/axios";
 
   export default {
-		data: () => ({
+    created() {
+      alert('当前平台停机维护，请耐心等待')
+    },
+    data: () => ({
       email: '',
       password: '',
       emailRules: [
