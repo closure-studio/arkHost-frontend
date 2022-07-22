@@ -1,0 +1,41 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: AutoUpdate
+
+on:
+  push:
+    branches: [ "vue3" ]
+    paths-ignore: # 下列文件的变更不触发部署，可以自行添加
+      - 'LICENSE'
+      - '.gitignore'
+      - 'README.md' 
+      - 'version.info' 
+  schedule:
+    # Runs "At every 15th minute." (see https://crontab.guru)
+    - cron: '*/15 * * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: gamedata update
+      run: |
+        cd src/assets/
+        if [[ ! -e data ]]; then
+          mkdir data
+        elif [[ ! -d data ]]; then
+          echo "data already exists but is not a directory" 1>&2
+        fi
+        cd data
+        git pull https://github.com/Kengxxiao/ArknightsGameData
+        
+    - name: Auto Commit
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Auto Update
+        commit_user_name: ClosureBot
+        commit_user_email: ${{ secrets.BOTEMAIL }}
+        commit_author: ClosureBot <${{ secrets.BOTEMAIL }}>
