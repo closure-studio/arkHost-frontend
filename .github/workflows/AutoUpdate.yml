@@ -27,14 +27,11 @@ jobs:
         cd src/assets/
         if [[ ! -e data ]]; then
           mkdir data
-          cd data
-          git clone https://github.com/Kengxxiao/ArknightsGameData
-          cd ..
         elif [[ ! -d data ]]; then
           echo "data already exists but is not a directory" 1>&2
         fi
         cd data
-        git pull https://github.com/Kengxxiao/ArknightsGameData
+        git pull --ff-only https://github.com/Kengxxiao/ArknightsGameData
         
     - name: Auto Commit
       uses: stefanzweifel/git-auto-commit-action@v4
