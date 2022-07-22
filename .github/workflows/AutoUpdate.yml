@@ -35,7 +35,7 @@ jobs:
         fi
         cd data
         git fetch https://github.com/Kengxxiao/ArknightsGameData
-        
+        git submodule update --init --recursive
     - name: Auto Commit
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
