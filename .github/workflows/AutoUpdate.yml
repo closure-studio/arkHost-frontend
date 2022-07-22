@@ -11,6 +11,7 @@ on:
       - '.gitignore'
       - 'README.md' 
       - 'version.info' 
+      - '.github/*' 
   schedule:
     # Runs "At every 15th minute." (see https://crontab.guru)
     - cron: '*/15 * * * *'
