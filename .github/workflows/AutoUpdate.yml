@@ -31,7 +31,7 @@ jobs:
         if [[ ! -e data ]]; then
           mkdir data
           cd data
-          git clone --recursive https://github.com/Kengxxiao/ArknightsGameData
+          git clone https://github.com/Kengxxiao/ArknightsGameData
           cd ..
         elif [[ ! -d data ]]; then
           echo "data already exists but is not a directory" 1>&2
