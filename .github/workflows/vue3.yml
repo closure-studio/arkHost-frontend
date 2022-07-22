@@ -6,8 +6,12 @@ name: vue3 CI
 on:
   push:
     branches: [ "vue3" ]
-  pull_request:
-    branches: [ "vue3" ]
+    paths-ignore: # 下列文件的变更不触发部署，可以自行添加
+      - 'LICENSE'
+      - '.gitignore'
+      - 'README.md' 
+      - 'version.info' 
+      - '.github/*' 
 
 jobs:
   build:
