@@ -25,9 +25,6 @@ jobs:
     - name: gamedata update
       run: |
         cd src/assets/
-        cd data
-        rm -rf ./*
-        cd ..
         if [[ ! -e data ]]; then
           mkdir data
           cd data
