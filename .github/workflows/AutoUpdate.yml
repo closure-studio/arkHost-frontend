@@ -34,7 +34,7 @@ jobs:
           echo "data already exists but is not a directory" 1>&2
         fi
         cd data
-        git pull --ff-only https://github.com/Kengxxiao/ArknightsGameData
+        git fetch https://github.com/Kengxxiao/ArknightsGameData
         
     - name: Auto Commit
       uses: stefanzweifel/git-auto-commit-action@v4
