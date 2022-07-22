@@ -25,6 +25,9 @@ jobs:
     - name: gamedata update
       run: |
         cd src/assets/
+        cd data
+        rm -rf ./*
+        cd ..
         if [[ ! -e data ]]; then
           mkdir data
           cd data
@@ -33,10 +36,6 @@ jobs:
         elif [[ ! -d data ]]; then
           echo "data already exists but is not a directory" 1>&2
         fi
-        cd data
-        git fetch https://github.com/Kengxxiao/ArknightsGameData
-        git submodule init
-        git submodule update
     - name: Auto Commit
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
