@@ -295,18 +295,7 @@ import Item from "@/components/Item";
           "isStopped": false
         }).then((resp) => {
           if (resp.code) {
-            this.$notify('托管配置修改成功，自动重新登录游戏...')
-            apiGameLogin({
-              account: this.account,
-              platform: this.platform
-            }).then(async (resp) => {
-              if (resp.code) {
-                this.$notify('重新登录成功')
-              } else {
-                this.$notify({type: 'w', title: '重新登录异常', text: resp.message})
-              }
-            })
-            this.$router.push('/dashboard')
+            this.$notify('托管配置修改成功!')
           } else {
             this.$notify({type: 'w', title: '修改托管配置失败', text: resp.message})
           }
