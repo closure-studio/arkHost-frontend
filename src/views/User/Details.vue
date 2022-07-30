@@ -142,11 +142,16 @@
                     hide-details
                     :menu-props="{ offsetY: true }"
                 ></v-select>
-                <v-text-field label="理智保留" v-model="keepAp" persistent-hint :hint="'当前等级最大自然恢复理智为 ' + details.status.maxAp" class="mt-3"></v-text-field>
+                <v-text-field label="理智保留" v-model.number="keepAp" persistent-hint :hint="'当前等级最大自然恢复理智为 ' + details.status.maxAp" class="mt-3"></v-text-field>
+                <v-text-field label="公招券保留" v-model.number="recruitReserve" persistent-hint :hint="'当前最多保留 ' + recruitReserve" class="mt-3"></v-text-field>
                 <div class="d-flex justify-space-between">
                   <v-switch
                       v-model="autoBattle"
                       label='自动战斗'
+                  ></v-switch>
+                  <v-switch
+                      v-model="recruitIgnoreRobot"
+                      label='招募支援机械'
                   ></v-switch>
                 </div>
                 <v-btn block tile large @click="submitEdit">提交修改</v-btn>
@@ -165,7 +170,6 @@ import {
   apiConfEdit,
   apiDetails,
   apiGameLog,
-  apiGameLogin,
   apiGetMapList,
   apiLog,
   apiScreenshots
@@ -197,7 +201,9 @@ import Item from "@/components/Item";
       tab: 0,
 
       showLog: false,
-      log: []
+      log: [],
+      recruitReserve: 0,
+      recruitIgnoreRobot: false
     }),
     computed: {
       account(){
@@ -240,6 +246,8 @@ import Item from "@/components/Item";
             this.keepAp = resp.data.keepingAP
             this.map = resp.data.mapId
             this.autoBattle = resp.data.isAutoBattle
+            this.recruitReserve = resp.data.recruitReserve
+            this.recruitIgnoreRobot = resp.data.recruitIgnoreRobot
           } else {
             this.$notify({type: 'w', title: '获取信息失败', text: resp.message})
             this.$router.push('/')
@@ -286,13 +294,16 @@ import Item from "@/components/Item";
         }
       },
       submitEdit() {
+        alert(this.recruitIgnoreRobot)
         apiConfEdit(this.account, this.platform, {
           "account": this.account,
           "isAutoBattle": this.autoBattle,
           "mapId": this.map,
           "platform": this.platform,
-          "keepingAP": Number(this.keepAp),
-          "isStopped": false
+          "keepingAP": this.keepAp,
+          "isStopped": false,
+          "recruitReserve": this.recruitReserve,
+          "recruitIgnoreRobot": this.recruitIgnoreRobot
         }).then((resp) => {
           if (resp.code) {
             this.$notify('托管配置修改成功!')
