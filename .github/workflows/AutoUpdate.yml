@@ -23,11 +23,9 @@ jobs:
 
     - name: gamedata update
       run: |
-
-        git submodule update --init --recursive
-
-
-
+        cd src/assets/data/ArknightsGameData
+        git pull
+        
     - name: Auto Commit
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
