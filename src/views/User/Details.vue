@@ -294,7 +294,6 @@ import Item from "@/components/Item";
         }
       },
       submitEdit() {
-        alert(this.recruitIgnoreRobot)
         apiConfEdit(this.account, this.platform, {
           "account": this.account,
           "isAutoBattle": this.autoBattle,
