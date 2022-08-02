@@ -160,7 +160,8 @@ export default {
         case 3:
           return `${n.text}`
         case 999:
-          return `<span style="color:purple">${n.text}</span>`
+          this.$notify({type: 'w', title: '需要通过验证码', text: '请点击【需要验证】'})
+          return `<span style="color:purple;cursor: pointer">${n.text}</span>`
       }
     },
     addAccount(){
