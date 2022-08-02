@@ -55,3 +55,5 @@ export const apiGetLog = () => get('System/LogFile') // GetLog
 export const apiGameDataUpdate = () => post('System/GameDataUpdate') // UpdateData
 export const apiEditAnnounce = (params) => post('System/Announcement', params) // EditAnnounce
 export const apiStatus = () => get('System/Status') // Status
+export const apiGeetest = (account, platform) => get(`Game/Captcha/${account}/${platform}`) // Geetest
+export const apiGeetestSet = (account, platform, params) => post(`Game/Captcha/${account}/${platform}`, params) // Geetest

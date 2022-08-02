@@ -7,6 +7,7 @@ import Notifications from 'vue-notification'
 import vuetify from './plugins/vuetify'
 import VueAxios from 'vue-axios'
 import '@/assets/index.css'
+import "/public/assets/gt/gt.js"
 Vue.config.productionTip = false
 Vue.use(Notifications)
 Vue.use(VueAxios, axios)

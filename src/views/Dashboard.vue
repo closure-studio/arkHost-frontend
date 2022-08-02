@@ -46,7 +46,7 @@
                 <td>{{ k.config.account.replace(/(\d{3})\d{6}(\d{2})/, '$1****$2') }}</td>
                 <td>{{ serverList[k.config.platform] }}</td>
                 <td>{{ k.config['isPause'] ? '暂停': '运行中'}}</td>
-                <td v-html="status(k.status)" />
+                <td v-html="status(k.status)" @click="gt(k.status === 999, k.config.account, k.config.platform)"/>
                 <td>
                   <v-btn small :color="k.config['isPause'] || k.status.code !== 2 ? 'green' : 'warning'" @click="login(k.config.account, k.config.platform, k.config['isPause'] || k.status.code !== 2)">
                     {{ k.config['isPause'] || k.status.code !== 2 ? '登录' : '暂停' }}</v-btn>
@@ -72,7 +72,7 @@ import {
   apiConf,
   apiConfEdit,
   apiDelGame,
-  apiGameLogin,
+  apiGameLogin, apiGeetest, apiGeetestSet,
   apiListGame,
   apiScreen
 } from "@/plugins/axios";
@@ -91,12 +91,47 @@ export default {
     head: ['序号', '账号', '所属平台', '运行状态', '账号状态', '操作'],
     gameList: [],
     serverList: ['IOS','官服','B服'],
-    Github: localStorage.getItem('github')
+    Github: localStorage.getItem('github'),
   }),
   methods:{
     github(){
       window.open('https://github.com/closure-studio/ReadMe', '_blank')
       localStorage.setItem('github', 'true')
+    },
+    gt(need, ac, pf){
+      this.$notify('正在加载验证码...')
+      apiGeetest(ac, pf).then(resp => {
+        //console.log(resp)
+        initGeetest({
+          gt: resp.data['gt'],
+          challenge: resp.data['challenge'],
+          offline: false,
+          product: "bind",
+          width: "300px",
+          https: true,
+        },(captchaObj) => {
+          captchaObj.onReady(() => {
+            captchaObj.verify();
+          })
+          captchaObj.onSuccess(() => {
+            const validate = captchaObj.getValidate();
+            this.$notify('提交成功，继续登录中')
+            //console.log("callback", captchaObj, validate)
+            apiGeetestSet(ac, pf, {
+              challenge: resp.data['challenge'],
+              geetest_challenge: validate.geetest_challenge,
+              geetest_seccode: validate.geetest_seccode,
+              geetest_validate: validate.geetest_validate,
+              success: true
+            }).then(() => {
+              setTimeout(() => {
+                this.loadList()
+              }, 1000)
+            })
+            captchaObj.destroy();//这里是销毁实例，处理完逻辑最终销毁
+          })
+        }, this)
+      })
     },
     del(ac, pf){
       this.$emit('alert','真的要删除账号吗?', () =>{
@@ -124,6 +159,8 @@ export default {
           return '<span style="color:green">运行中</span>'
         case 3:
           return `${n.text}`
+        case 999:
+          return `<span style="color:purple">${n.text}</span>`
       }
     },
     addAccount(){
@@ -207,6 +244,6 @@ export default {
   },
   async created() {
     await this.loadList()
-  }
+  },
 }
 </script>
