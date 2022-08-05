@@ -76,7 +76,7 @@
     },
     created() {
       for (const k in this.details.status) {
-        const map = {'exp': 'EXP_PLAYER', 'socialPoint': 'SOCIAL_PT', 'gachaTicket': 'TKT_GACHA', 'tenGachaTicket': 'TKT_GACHA_10', 'recruitLicense': 'TKT_RECRUIT', 'ap': 'AP_GAMEPLAY', 'gold': 'GOLD'}
+        const map = {'exp': 'EXP_PLAYER', 'diamondShard': 'DIAMOND_SHD', 'socialPoint': 'SOCIAL_PT', 'gachaTicket': 'TKT_GACHA', 'tenGachaTicket': 'TKT_GACHA_10', 'recruitLicense': 'TKT_RECRUIT', 'ap': 'AP_GAMEPLAY', 'gold': 'GOLD'}
         if (map[k]) {
           //console.log(k, this.details.status[k], this.old.status[k])
           if (this.details.status[k] !== this.old.status[k]) {
