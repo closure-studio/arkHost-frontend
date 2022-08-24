@@ -44,7 +44,7 @@
               <tr v-for="(k,v) in gameList" class="text-center">
                 <td>{{ v+1 }}</td>
                 <td>{{ k.config.account.replace(/(\d{3})\d{6}(\d{2})/, '$1****$2') }}</td>
-                <td>{{ serverList[k.config.platform] }}</td>
+                <td>{{ serverList[k.config.platform-1] }}</td>
                 <td>{{ k.config['isPause'] ? '暂停': '运行中'}}</td>
                 <td v-html="status(k.status)" @click="gt(k.status === 999, k.config.account, k.config.platform)"/>
                 <td>
@@ -81,7 +81,7 @@ import Announce from "@/components/Announce";
 export default {
   components: {Loading, Announce},
   data:() => ({
-    server: [{id:0,name:'IOS'}, {id:1,name:'安卓官方'}, {id:2,name:'Bilibili'}],
+    server: [{id:1,name:'安卓官方'}, {id:2,name:'Bilibili'}],
     rule: [v => !!v || '!!!!!!!!!!!!!!'],
     selServer: {id:1},
     account: '',
@@ -90,7 +90,7 @@ export default {
     overlay2: false,
     head: ['序号', '账号', '所属平台', '运行状态', '账号状态', '操作'],
     gameList: [],
-    serverList: ['IOS','官服','B服'],
+    serverList: ['官服','B服'],
     Github: localStorage.getItem('github'),
   }),
   methods:{
@@ -182,15 +182,6 @@ export default {
           }
         })
       }
-    },
-    getScreen(ac, pf){
-      apiScreen(ac,pf).then((resp) => {
-        if(resp.code){
-          alert('等待实装ing')
-        }else{
-          this.$notify({type: 'w', title: '获取截图失败', text:resp.message})
-        }
-      })
     },
     login(ac, pf, isStop){
       if (isStop) {

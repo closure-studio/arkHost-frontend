@@ -1,7 +1,3 @@
-<style scoped>
-/* From cssbuttons.io by @gagan-gv */
-</style>
-
 <template>
   <div>
     <div class="d-flex align-center my-4 mt-9 flex-column">
