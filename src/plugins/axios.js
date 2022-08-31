@@ -57,3 +57,6 @@ export const apiEditAnnounce = (params) => post('System/Announcement', params) /
 export const apiStatus = () => get('System/Status') // Status
 export const apiGeetest = (account, platform) => get(`Game/Captcha/${account}/${platform}`) // Geetest
 export const apiGeetestSet = (account, platform, params) => post(`Game/Captcha/${account}/${platform}`, params) // Geetest
+
+export const apiBindQQ = (qq, code) => post(`Auth/bind/${qq}?code=${code}`, {}) // BindQQ
+export const apiForgetPass = (qq, email, code, pass) => get(`Auth/forget/${email}/${qq}?code=${code}&newPass=${pass}`) // Forget
