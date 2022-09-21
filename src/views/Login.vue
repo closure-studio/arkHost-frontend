@@ -15,7 +15,7 @@
               type="email"
               v-model="email"
               placeholder="邮箱"
-              class="qbz-input mb-2"
+              class="ark-input mb-2"
             />
           </div>
           <div>
@@ -26,7 +26,7 @@
               type="password"
               v-model="password"
               placeholder="请输入密码"
-              class="qbz-input mb-2"
+              class="ark-input mb-2"
             />
           </div>
         </div>

@@ -34,9 +34,10 @@ th {
 .nav-side {
   @apply fixed inset-y-0 left-0 z-30 w-64 transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0;
 }
-.qbz-input {
-  @apply input border-white w-full focus:outline-none focus:border-info hover:border-info;
+.ark-input {
+  @apply input border-primary w-full focus:outline-none focus:border-info hover:border-info;
 }
-.ark-card {
-  @apply card w-full bg-base-100 shadow-xl p-5 rounded-md
+
+.ark-grid {
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr))
 }

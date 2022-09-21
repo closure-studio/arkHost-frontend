@@ -70,9 +70,6 @@
 <script setup>
   import {userStore} from "../store/user";
   import {storeToRefs} from "pinia/dist/pinia";
-
   const _user = userStore()
   const {user} = storeToRefs(_user)
-
-
 </script>
