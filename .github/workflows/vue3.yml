@@ -6,8 +6,12 @@ name: vue3 CI
 on:
   push:
     branches: [ "vue3" ]
-  pull_request:
-    branches: [ "vue3" ]
+    paths-ignore: # 下列文件的变更不触发部署，可以自行添加
+      - 'LICENSE'
+      - '.gitignore'
+      - 'README.md' 
+      - 'version.info' 
+      - '.github/**' 
 
 jobs:
   build:
@@ -33,7 +37,7 @@ jobs:
       env:
         VERSION: ${{ env.GITHUB_SHA }}
       with:
-        vercel-token: v9u3xZyfX8QDJoO4iAOd41Ze
+        vercel-token: ${{ secrets.VERCELTOKEN }}
         vercel-org-id: ACvNqWav658U9oQcaYNOXJod
         vercel-project-id: prj_jAlwxE3eyjdyEF1f2GXxlNeysq10
         working-directory: ./

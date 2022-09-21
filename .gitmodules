@@ -1,0 +1,3 @@
+[submodule "src/assets/data/ArknightsGameData"]
+	path = src/assets/data/ArknightsGameData
+	url = https://github.com/Kengxxiao/ArknightsGameData
