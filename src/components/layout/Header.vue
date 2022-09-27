@@ -1,7 +1,7 @@
 <template>
   <div class="navbar bg-base-100 shadow-lg" :class="{ 'rounded-lg': isLarge }">
     <div class="navbar-start">
-      <div class="btn btn-circle btn-ghost">
+      <div class="btn btn-circle btn-ghost" @click="jump">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-5 w-5"
@@ -22,20 +22,20 @@
           <ul>
             <li><router-link to="/">可露希尔</router-link></li>
             <li>
-              <a>{{ $route.meta["title"] }}</a>
+              <a>{{ $route.meta["title"] }} </a>
             </li>
           </ul>
         </div>
-        <div class="lg:hidden text-xl">
+        <div class="lg:hidden text-xl" >
           {{ $route.meta["title"] }}
         </div>
       </div>
     </div>
     <div class="navbar-center text-info font-bold">
       <div v-if="!isLarge">
-        <div class="text-lg breadcrumbs">
+        <div class="breadcrumbs">
           <ul>
-            <li><a>可露希尔</a></li>
+            <li><router-link to="/">可露希尔</router-link></li>
             <li>
               <a>{{ $route.meta["title"] }}</a>
             </li>
@@ -89,7 +89,9 @@ const dropdownOpen = ref(false);
 import { isLarge } from "../../plugins/common";
 import { userStore } from "../../store/user";
 import { createToast } from "mosha-vue-toastify";
+import {useRouter} from "vue-router";
 const user = userStore();
+const router = useRouter()
 const logout = () => {
   user.logout();
   createToast("退出成功", {
@@ -98,4 +100,7 @@ const logout = () => {
     transition: "bounce",
   });
 };
+const jump = () => {
+  router.push("/home")
+}
 </script>

@@ -21,7 +21,22 @@ export const router = createRouter({
       name: "home",
       component: () => import("../views/Home.vue"),
       meta: { title: "主页" },
-    },
+    },{
+      path: "/details/:account/:platform",
+      name: "details",
+      component: () => import("../views/Details.vue"),
+      meta: { title: "账号信息" },
+    },{
+      path: "/Register",
+      name: "Register",
+      component: () => import("../views/Register.vue"),
+      meta: { title: "账号注册", noAuth: true },
+    },{
+      path: "/test",
+      name: "test",
+      component: () => import("../views/test.vue"),
+      meta: { title: "test", noAuth: true },
+    }
   ],
 });
 router.beforeEach((to, from, next) => {

@@ -21,9 +21,9 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 100px rgb(33, 33, 33) inset !important;
   -webkit-text-fill-color: #fff !important;
 }
-td,
-th {
+td, th {
   white-space: nowrap !important;
+  @apply px-3
 }
 .nav-inactive {
   @apply border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100;
@@ -37,7 +37,6 @@ th {
 .ark-input {
   @apply input border-primary w-full focus:outline-none focus:border-info hover:border-info;
 }
-
 .ark-grid {
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr))
 }

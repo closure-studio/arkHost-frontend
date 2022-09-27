@@ -46,8 +46,15 @@ function get(url: string) {
 }
 function del(url: string, params: any) {
   return new Promise((resolve) => {
-    axios.delete(url, { data: params }).then((res) => {
+    service.delete(url, { data: params }).then((res) => {
       resolve(res);
+    });
+  });
+}
+function load(fileName: string) {
+  return new Promise((resolve) => {
+    axios.get(`data/${fileName}.json`).then((res) => {
+      resolve(res.data);
     });
   });
 }
@@ -57,8 +64,9 @@ export const apiLogin = (params: string) => get(`Auth/${params}`); // Login
 export const apiReLogin = (token: string) => get(`Auth/${token}`); // ReLogin
 export const apiCron = () => get("Nodes"); // Cron
 export const apiAnnounce = () => get("System/Announcement"); // Announce
-export const apiAddGame = (params: any) => post("Game", params); // Game
-export const apiGameLogin = (params: any) => post("Game/Login", params); // Game
+export const apiAddGame = (params: any) => post("Game", params); // GameCreate
+export const apiGameLogin = (params: any) => post("Game/Login", params); // GameLogin
+export const apiGameLog = (account: string, platform: string) => get(`Game/Log/${account}/${platform}/0`); // GameLog
 export const apiListGame = () => get("Game"); // GameList
 export const apiDelGame = (params: any) => del("Game", params); // Del
 export const apiScreen = (account: string, platform: string) =>
@@ -67,11 +75,11 @@ export const apiDetails = (account: string, platform: string) =>
   get(`Game/${account}/${platform}`); // GetDetails
 export const apiConf = (account: string, platform: string) =>
   get(`Game/Config/${account}/${platform}`); // GetConf
-export const apiConfEdit = (account: string, platform: number, params: any) =>
+export const apiConfEdit = (account: string, platform: number, params: GameCfg) =>
   post(`Game/Config/${account}/${platform}`, params); // UpdateConfig
 export const apiLog = (account: string, platform: number, index: string) =>
   get(`Log/${account}/${platform}/${index}`); // Log
-export const apiScreenshots = (account: string, platform: number) =>
+export const apiScreenshots = (account: string, platform: string) =>
   get(`Game/Screenshots/${account}/${platform}`); // GetScreen
 export const apiGetMapList = () => get("System/Maps"); // GetMapList
 
@@ -80,3 +88,7 @@ export const apiGameDataUpdate = () => post("System/GameDataUpdate", {}); // Upd
 export const apiEditAnnounce = (params: any) =>
   post("System/Announcement", params); // EditAnnounce
 export const apiStatus = () => get("System/Status"); // Status
+
+export const TableStage = () => load("Stage");
+
+export const apiGeetestSet = (account: string, platform: number, params: any) => post(`Game/Captcha/${account}/${platform}`, params) // Geetest

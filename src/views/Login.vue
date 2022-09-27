@@ -2,7 +2,11 @@
   <div
     class="flex flex-col max-w-md mx-auto rounded-md bg-base-200 shadow-2xl relative"
   >
-    <loading v-if="load" />
+    <loading v-if="load">
+      <div class="flex items-center justify-center">
+        <div class="w-16 h-16 border-4 border-dashed rounded-full animate-spin-slow border-info"/>
+      </div>
+    </loading>
     <div class="p-6 sm:p-10">
       <div class="mb-6 text-center">
         <h1 class="my-3 text-4xl font-bold text-info">登录</h1>

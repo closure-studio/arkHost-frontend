@@ -9,7 +9,7 @@ import "mosha-vue-toastify/dist/style.css";
 import BaseLayout from "./components/layout/BaseLayout.vue";
 import "./assets/index.css";
 import "./assets/style.css";
-
+import "/src/plugins/gt.js"
 const app = createApp(App);
 const pinia = createPinia();
 pinia.use(

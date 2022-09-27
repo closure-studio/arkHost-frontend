@@ -21,6 +21,16 @@
         box-shadow: 0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12)
     }
     .ark-card {
-        @apply card w-full bg-base-100 shadow-lg p-5 rounded-md
+        @apply card w-full bg-base-100 shadow-lg p-5 rounded-md h-fit
+    }
+    .float-input {
+        @apply input px-2.5 pb-3.5 pt-4 w-full text-xl text-info bg-transparent rounded-lg border-gray-400 focus:border-info focus:outline-none focus:ring-0
+    }
+    .float-input-text {
+        @apply absolute text-xl text-gray-400 duration-200 -translate-y-4
+        scale-75 top-1.5 z-10 origin-[0] bg-base-100 ark-pro px-1
+        peer-focus:text-info peer-placeholder-shown:scale-100
+        peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1
+        peer-focus:scale-90 peer-focus:-translate-y-4 left-2
     }
 }
