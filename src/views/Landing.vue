@@ -32,7 +32,7 @@
       >
         <img
           class="absolute inset-0 object-cover w-full h-full"
-          src="https://ak.nai-ve.com/img/login.58a0ee4e.webp"
+          src="/assets/index.png"
           alt="skadiD here"
         />
       </div>

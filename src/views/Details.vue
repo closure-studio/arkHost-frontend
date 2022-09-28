@@ -1,12 +1,13 @@
 <template>
   <div class="flex flex-row gap-4 md:gap-10 flex-wrap justify-between">
     <div class="md:basis-[46%] lg:basis-[30%] ark-card relative">
-      <div class="absolute right-0 left-0 top-0 bottom-0 opacity-20 bg-no-repeat bg-center" style="background-image: url('https://assest.arknights.host/charpack/char_002_amiya_2.webp')"/>
+      <div class="absolute right-0 left-0 top-0 bottom-0 opacity-20 bg-no-repeat"
+           style="background-position:-532px -758px;background-image: url('https://assest.arknights.host/charpack/char_1012_skadi2_boc_4.webp')"/>
       <div class="flex flex-row">
         <div class="w-fit flex flex-col items-center">
           <div class="avatar">
             <div class="w-24 rounded-full ring ring-offset-base-100 ring-offset-2" :class="isLogin ? 'ring-success' : 'ring-error'">
-              <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=10003653&spec=100" alt="skadiD" />
+              <img :src="'https://ak.dzp.me/dst/avatar/ASSISTANT/' + (gameInfo?.status?.secretary || 'npc_001_doctor') + '.webp'" alt="skadiD" />
             </div>
           </div>
         </div>
