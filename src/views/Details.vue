@@ -23,7 +23,7 @@
       <div class="mt-1 pb-2 text-5xl flex flex-col">
         <div class="flex justify-between items-center">
           <span class="text-info text-2xl">理智</span>
-          <div class="badge badge-primary p-4">Lv.120</div>
+          <div class="badge badge-primary p-4">Lv.{{gameInfo.status?.level}}</div>
         </div>
         <div class="text-center mt-1">
           <span class="text-6xl md:text-5xl 2xl:text-6xl text-primary">{{ nowAp }}</span> / {{ gameInfo.status?.maxAp || '-' }}
@@ -44,7 +44,7 @@
     <div v-if="isLogin" class="basis-full lg:basis-[45%] xl:basis-[55%] ark-card ark-pro font-bold lg:text-left">
       <div class="mt-1 pb-2 text-5xl flex flex-col">
         <span class="text-info text-2xl">托管日志</span>
-        <div class="overflow-hidden overflow-x-auto overflow-y-auto rounded max-h-80 mt-4">
+        <div class="overflow-hidden overflow-x-auto overflow-y-auto rounded max-h-96 mt-4">
           <table class="min-w-full text-sm">
             <thead>
               <tr class="text-info text-left text-xl">
@@ -66,9 +66,12 @@
       <div class="mt-1 text-5xl flex flex-col">
         <span class="text-info text-2xl">不实时截图</span>
         <div class="carousel w-full mt-2">
-          <div id="slide1" class="carousel-item relative w-full" v-for="k in 1">
-            <img src="https://screenshot.dzp.me/battle_f978f3e4-8c63-173f-9adb-b3593a61e57e_25da3372-e76a-4b2f-b71d-5227fd95b7ae_1.webp" class="w-full" />
+          <div :id="'screen_' + (v + 1)" class="carousel-item relative w-full" v-for="(k, v) in screenshots">
+            <img :src="'https://screenshot.dzp.me/' + k" class="w-full" />
           </div>
+        </div>
+        <div class="flex justify-center w-full pt-3 gap-3">
+          <a v-for="k in screenshots.length" :href="'#screen_' + k" class="btn btn-sm btn-outline btn-primary">{{ k }}</a>
         </div>
       </div>
     </div>

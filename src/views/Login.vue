@@ -32,6 +32,7 @@
               placeholder="请输入密码"
               class="ark-input mb-2"
             />
+            没有账号？<router-link to="/register" class="text-primary">点击注册</router-link>
           </div>
         </div>
         <div class="space-y-2">
