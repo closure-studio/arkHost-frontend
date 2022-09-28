@@ -62,7 +62,7 @@
         </div>
       </div>
     </div>
-    <div v-if="isLogin" class="basis-full lg:basis-[50%] xl:basis-[40%] ark-card ark-pro font-bold lg:text-left">
+    <div v-if="isLogin && screenshots" class="basis-full lg:basis-[50%] xl:basis-[40%] ark-card ark-pro font-bold lg:text-left">
       <div class="mt-1 text-5xl flex flex-col">
         <span class="text-info text-2xl">不实时截图</span>
         <div class="carousel w-full mt-2">

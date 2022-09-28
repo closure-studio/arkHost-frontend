@@ -53,9 +53,9 @@
               </div>
             </loading>
             <div @click="jump(k)">
-              <div class="flex justify-between items-center" >
-                <span class="text-lg tracking-wider font-bold">账号：{{k.config.account.replace(/(\d{3})\d{6}(\d{2})/, '$1****$2')}}</span>
-                <div class="badge p-3" :class="k.config.platform === 1 ? 'badge-primary' : 'badge-info'">
+              <div class="flex justify-between items-center">
+                <span class="text-lg tracking-wider font-bold whitespace-nowrap text-ellipsis overflow-hidden">账号：{{account(k.config.account)}}</span>
+                <div class="badge p-3 px-4" :class="k.config.platform === 1 ? 'badge-primary' : 'badge-info'">
                   {{k.config.platform === 1 ? '官' : 'B'}}服
                 </div>
               </div>
@@ -307,5 +307,9 @@ const login = () => {
       })
     }
   })
+}
+const account = (val: string) => {
+  val = val.replace(/(\d{3})\d{6}(\d{2})/, '$1****$2')
+  return val.length > 12 ? val.substring(0, 10) + '···' : val
 }
 </script>
