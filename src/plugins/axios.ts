@@ -90,5 +90,8 @@ export const apiEditAnnounce = (params: any) =>
 export const apiStatus = () => get("System/Status"); // Status
 
 export const TableStage = () => load("Stage");
+export const TableStage_ = () => load("stage_table");
+export const TableItems_ = () => load("item_table");
+export const TableItems = () => load("Items");
 
 export const apiGeetestSet = (account: string, platform: number, params: any) => post(`Game/Captcha/${account}/${platform}`, params) // Geetest

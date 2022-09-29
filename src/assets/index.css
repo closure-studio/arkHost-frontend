@@ -33,4 +33,22 @@
         peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1
         peer-focus:scale-90 peer-focus:-translate-y-4 left-2
     }
+    .ark-mapItem {
+        width: 10rem;
+        right: -3.5rem;
+        bottom: -3.5rem;
+        transform: rotate(-20deg);
+        opacity: 0.2;
+        color: hsl(var(--p) / var(--tw-bg-opacity));
+    }
+    .ark-mapItem-md {
+        width: 13rem;
+        right: -5rem;
+        bottom: -5rem;
+    }
+    .ark-mapItem-lg {
+        width: 15rem;
+        right: -6rem;
+        bottom: -6rem;
+    }
 }

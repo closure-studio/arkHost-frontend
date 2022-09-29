@@ -79,3 +79,13 @@ interface Log{
     info: string
     ts: number
 }
+interface Stage {
+    name: string
+    code: string
+    ap: number
+    items: number[]
+}
+interface Items {
+    name: string
+    icon: string
+}
