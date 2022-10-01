@@ -106,7 +106,7 @@
         <div class="divider mb-1">托管地图<div class="btn btn-info btn-outline btn-sm" @click="showMapSearch = true">配置</div></div>
         <div class="gap-2 flex whitespace-nowrap flex-wrap mb-2 text-info">
           当前战斗队列：
-          <div v-if="config.battleMaps.length > 0" class="badge badge-primary p-3" v-for="k in config.battleMaps">{{ stageTable[k]?.code }}</div>
+          <div v-if="config.battleMaps?.length > 0" class="badge badge-primary p-3" v-for="k in config.battleMaps">{{ stageTable[k]?.code }}</div>
           <div v-else class="badge badge-primary p-3">暂未配置</div>
         </div>
         <button class="btn btn-primary btn-block" @click="saveCfg">保存</button>
