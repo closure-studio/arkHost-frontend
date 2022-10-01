@@ -65,7 +65,7 @@
                 当前状态：<span :class="statusColor(k.status.code)" class="font-bold">{{k.status.text}}</span>
               </span>
                 <span class="flex justify-between w-full">
-                托管地图：<span class="font-bold">{{k.game_config.mapId || '-'}}</span>
+                托管地图：<span class="font-bold">{{stageTable[k.game_config.mapId]?.code || '-'}}</span>
               </span>
                 <span class="flex justify-between w-full">
                 理智保留：<span class="font-bold">{{k.game_config.keepingAP}}</span>
@@ -100,6 +100,7 @@ import {
   apiGameLogin,
   apiGeetestSet, apiAddGame,
 } from "../plugins/axios";
+import {stageTable} from "../store/data";
 import {ref} from "vue";
 import {createToast} from "mosha-vue-toastify";
 import Select from "../components/element/Select.vue";
@@ -126,7 +127,6 @@ apiAnnounce().then((res: any) => {
 const getList = () => {
   apiListGame().then((res: any) => {
     list.value = res.data
-    console.lo·g(list.value)
     // 状态更新轮询
     for (let k of list.value) {
       if (k.status.code === 1) {
