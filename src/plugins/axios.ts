@@ -53,7 +53,7 @@ function del(url: string, params: any) {
 }
 function load(fileName: string) {
   return new Promise((resolve) => {
-    axios.get(`data/${fileName}.json`).then((res) => {
+    axios.get(`/data/${fileName}.json`).then((res) => {
       resolve(res.data);
     });
   });

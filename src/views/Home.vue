@@ -126,7 +126,7 @@ apiAnnounce().then((res: any) => {
 const getList = () => {
   apiListGame().then((res: any) => {
     list.value = res.data
-    console.log(list.value)
+    console.lo·g(list.value)
     // 状态更新轮询
     for (let k of list.value) {
       if (k.status.code === 1) {

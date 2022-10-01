@@ -51,4 +51,22 @@
         right: -6rem;
         bottom: -6rem;
     }
+    .ark-mapItem-click {
+        width: 10rem;
+        right: -2.4rem;
+        bottom: -3rem;
+        transform: rotate(-24deg);
+        opacity: 0.2;
+        color: hsl(var(--p) / var(--tw-bg-opacity));
+    }
+    .ark-mapItem-click-md {
+        width: 12rem;
+        right: -3rem;
+        bottom: -3.5rem;
+    }
+    .ark-mapItem-click-lg {
+        width: 15rem;
+        right: -4rem;
+        bottom: -4.5rem;
+    }
 }

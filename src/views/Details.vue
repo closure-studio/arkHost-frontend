@@ -102,8 +102,43 @@
               是否托管战斗<input type="checkbox" class="toggle" checked v-model="config.isAutoBattle" />
             </span>
           </div>
-          <button class="btn btn-primary btn-block" @click="saveCfg">保存</button>
         </div>
+        <div class="divider mb-1">托管地图<div class="btn btn-info btn-outline btn-sm" @click="showMapSearch = true">配置</div></div>
+        <div class="gap-2 flex whitespace-nowrap flex-wrap mb-2 text-info">
+          当前战斗队列：
+          <div v-if="config.battleMaps.length > 0" class="badge badge-primary p-3" v-for="k in config.battleMaps">{{ stageTable[k]?.code }}</div>
+          <div v-else class="badge badge-primary p-3">暂未配置</div>
+        </div>
+        <button class="btn btn-primary btn-block" @click="saveCfg">保存</button>
+      </div>
+    </div>
+  </Modal>
+  <Modal :showing="showMapSearch" :close="close2">
+    <div class="card ark-pro bg-base-100 shadow-lg overflow-visible">
+      <div class="card-body">
+        <h1 class="card-title text-3xl text-info">地图选择器 Beta</h1>
+        <div class="flex whitespace-nowrap items-center mt-1">
+          <div class="relative w-full">
+            <input type="text" id="f_3" class="float-input peer" placeholder=" " v-model="mapKeyWord"/>
+            <label for="f_3" class="float-input-text">关卡名或代号</label>
+          </div>
+          <button class="btn btn-info px-7 ml-4" @click="search">查找</button>
+        </div>
+        <div class="gap-2 flex whitespace-nowrap flex-wrap mt-1 text-info">
+          当前战斗队列：
+          <div v-if="battleMap_.length > 0" class="badge badge-primary p-3" v-for="k in battleMap_">{{ k }}</div>
+          <div v-else class="badge badge-primary p-3">等待添加</div>
+        </div>
+        <div class="divider my-1"/>
+        <div v-for="v in searchRes.slice((page - 1) * 5, page * 5)" @click="select(v.id, v.code)"
+             class="ark-card my-2 lg:hover:translate-x-6 duration-500 group ">
+          <MapItem :stage="v" :battleMap="battleMap"/>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mt-3" v-if="searchRes.length > 0">
+          <div class="btn btn-block btn-primary" :class="{'btn-disabled': page < 2}" @click="page--">上一页</div>
+          <div class="btn btn-block btn-primary" :class="{'btn-disabled': page >= Math.ceil(searchRes.length / 5)}" @click="page++">下一页</div>
+        </div>
+        <button class="btn btn-primary btn-block" @click="submitStage">提交</button>
       </div>
     </div>
   </Modal>
@@ -116,6 +151,9 @@
   import {formatDate} from '../plugins/function.js'
   import Modal from "../components/element/Modal.vue";
   import {createToast} from "mosha-vue-toastify";
+  import {stageTable} from "../store/data";
+  import MapItem from "../components/MapItem.vue";
+
   const route = useRoute();
   const gameInfo = ref<Details>({} as Details);
   const gameLog = ref<Log[]>([]);
@@ -161,8 +199,12 @@
     config.value = res.data
   })
   const showModal = ref(false)
+  const showMapSearch = ref(false)
   const close = () => {
     showModal.value = false
+  }
+  const close2 = () => {
+    showMapSearch.value = false
   }
   const saveCfg = () => {
     console.log(config.value)
@@ -182,5 +224,67 @@
       }
     })
     close()
+  }
+
+  // battle map select
+  const mapKeyWord = ref('')
+  const searchRes = ref<Stage[]>([])
+  const battleMap = ref<string[]>([])   // id
+  const battleMap_ = ref<string[]>([])  // code
+  const page = ref(1)
+  const filter = (obj: any, func: Function) => {
+    let ret = <Stage[]>[]
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key) && func(obj[key])) {
+        obj[key].id = key
+        ret.push(obj[key])
+      }
+    }
+    return ret;
+  }
+  const search = () => {
+    page.value = 1
+    if (mapKeyWord.value === '') {
+      createToast("请输入关卡关键词", {
+        showIcon: true,
+        type: "info",
+        transition: "bounce",
+      });
+      searchRes.value = []
+      return
+    }
+    searchRes.value = filter(stageTable.value, (item: Stage) => {
+      let key = mapKeyWord.value.toUpperCase()
+      if (item.name.includes(key) || item.code.includes(key)) {
+        return item
+      }
+    }).reverse()
+    console.log(searchRes.value)
+  }
+  const select = (mapID: string, mapName: string) => {
+    if (!battleMap.value.includes(mapID)) {
+      if (battleMap.value.length > 4) {
+        createToast("当前托管队列已满", {
+          showIcon: true,
+          type: "warning",
+          transition: "bounce",
+        });
+        return
+      }
+      battleMap.value.push(mapID)
+      battleMap_.value.push(mapName)
+      createToast("已添加到战斗队列", {
+        showIcon: true,
+        type: "success",
+        transition: "bounce",
+      });
+    } else {
+      battleMap.value = battleMap.value.filter(item => item !== mapID)
+      battleMap_.value = battleMap_.value.filter(item => item !== mapName)
+    }
+  }
+  const submitStage = () => {
+    config.value.battleMaps = battleMap.value
+    showMapSearch.value = false
   }
 </script>

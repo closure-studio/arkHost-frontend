@@ -11,12 +11,20 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      keyframes: {
+        watermark: {
+          '0%': { opacity: 0 },
+          '50%': { opacity: 50 },
+          '100%': { opacity: 100 },
+        }
+      },
       colors: {
         card: withOpacityValue("--c"),
         title: withOpacityValue("--t"),
       },
       animation: {
         "spin-slow": "spin 3.5s linear infinite",
+        "water-mark": "watermark 0.5s linear 1",
       },
       boxShadow: {
         'md': '0 3px 3px -2px rgba(0,0,0,0.2),0 3px 4px 0 rgba(0,0,0,0.14),0 1px 8px 0 rgba(0,0,0,0.12)',

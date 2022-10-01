@@ -4,7 +4,7 @@ interface GameCfg {
     isStopped: boolean,
     keepingAP: number,
     mapId: string,
-    battleMaps: string,
+    battleMaps: string[],
     recruitIgnoreRobot: boolean,
     recruitReserve: number,
     enableBuildingArrange: boolean
@@ -80,6 +80,7 @@ interface Log{
     ts: number
 }
 interface Stage {
+    id: string
     name: string
     code: string
     ap: number
