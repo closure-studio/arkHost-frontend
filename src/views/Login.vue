@@ -110,7 +110,7 @@ const login = () => {
     transition: "bounce",
     timeout: 1500,
   });
-  apiLogin(`${email.value}/${password.value}`).then((resp) => {
+  apiLogin(`${email.value}/${encodeURIComponent(password.value)}`).then((resp) => {
     load.value = false;
     if (resp.code) {
       createToast("登录成功，欢迎来到可露希尔的午夜商超", {
