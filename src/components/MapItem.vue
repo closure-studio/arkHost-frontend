@@ -11,7 +11,12 @@
   </div>
   <div class="w-full flex items-center text-3xl justify-between md:justify-start">
     <div class="flex flex-col md:w-56">
-      <span class="flex items-end leading-5"><span class="text-lg leading-3">作战</span>{{ stage.code }}</span>
+      <span class="flex items-end leading-5">
+        <div class="badge" :class="stage.id.includes('tough') ? 'badge-info' : 'badge-primary'">
+          {{ stage.id.includes('tough') ? '高难' : '作战'}}
+        </div>
+        {{ stage.code }}
+      </span>
       <span class="text-primary font-bold whitespace-nowrap overflow-hidden text-ellipsis">{{ stage.name }}</span>
     </div>
     <div class="flex flex-row items-center">

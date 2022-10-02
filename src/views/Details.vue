@@ -104,11 +104,12 @@
           </div>
         </div>
         <div class="divider mb-1">托管地图<div class="btn btn-info btn-outline btn-sm" @click="showMapSearch = true">配置</div></div>
-        <div class="gap-2 flex whitespace-nowrap flex-wrap mb-2 text-info">
+        <div class="gap-2 flex whitespace-nowrap flex-wrap mb-1 text-info">
           当前战斗队列：
           <div v-if="config.battleMaps?.length > 0" class="badge badge-primary p-3" v-for="k in config.battleMaps">{{ stageTable[k]?.code }}</div>
           <div v-else class="badge badge-primary p-3">暂未配置</div>
         </div>
+        <div class="divider my-1">*点击保存才会提交托管地图</div>
         <button class="btn btn-primary btn-block" @click="saveCfg">保存</button>
       </div>
     </div>
@@ -138,7 +139,7 @@
           <div class="btn btn-block btn-primary" :class="{'btn-disabled': page < 2}" @click="page--">上一页</div>
           <div class="btn btn-block btn-primary" :class="{'btn-disabled': page >= Math.ceil(searchRes.length / 5)}" @click="page++">下一页</div>
         </div>
-        <button class="btn btn-primary btn-block" @click="submitStage">提交</button>
+        <button class="btn btn-primary btn-block" @click="submitStage">关闭</button>
       </div>
     </div>
   </Modal>
