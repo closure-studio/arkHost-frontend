@@ -36,6 +36,11 @@ export const router = createRouter({
       name: "test",
       component: () => import("../views/test.vue"),
       meta: { title: "test", noAuth: true },
+    },{
+      path: "/cron",
+      name: "cron",
+      component: () => import("../views/Cron.vue"),
+      meta: { title: "状态监控"},
     }
   ],
 });

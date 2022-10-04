@@ -90,3 +90,11 @@ interface Items {
     name: string
     icon: string
 }
+interface Node {
+    name: string
+    number: number,
+    cpu: number
+    cpuAvg: number
+    update_UTCTime: number
+    boot_UTCTime: number
+}
