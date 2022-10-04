@@ -52,7 +52,7 @@
                 登录中...
               </div>
             </loading>
-            <div @click="jump(k)">
+            <div @click="jump(k)" v-if="k.config?.account">
               <div class="flex justify-between items-center">
                 <span class="text-lg tracking-wider font-bold whitespace-nowrap text-ellipsis overflow-hidden">账号：{{account(k.config.account)}}</span>
                 <div class="badge p-3 px-4" :class="k.config.platform === 1 ? 'badge-primary' : 'badge-info'">
