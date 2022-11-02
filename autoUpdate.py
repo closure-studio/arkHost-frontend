@@ -1,7 +1,26 @@
 
+import http
 import json
 import os
 import urllib.request
+
+
+def qqbot(msg):
+    conn = http.client.HTTPSConnection("mc.mesord.com", 8098)
+    payload = json.dumps({
+    "token": "ADMIN_TOKEN@FEXLI_2022",
+    "msg": "【Action】" + msg,
+    "uid": 913468406,
+    "toImg": False
+    })
+    headers = {
+    'Content-Type': 'application/json'
+    }
+    conn.request("POST", "/api/send_msg_auto", payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    print(data.decode("utf-8"))
+
 
 
 # check gameDataHash is exist?
@@ -42,7 +61,7 @@ if commitHash != latestCommitHash:
     # remove the old stage_table.json and item_table.json
     os.remove("stage_table.json")
     os.remove("item_table.json")
-        
+    qqbot("前端数据stage_table item_table 更新成功 commit hash: " + latestCommitHash)
 else:
     print("Already the latest version")
 
