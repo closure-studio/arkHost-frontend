@@ -42,10 +42,10 @@
         </div>
       </div>
     </div>
-    <div v-if="isLogin" class="basis-full lg:basis-[45%] xl:basis-[55%] ark-card ark-pro font-bold lg:text-left">
+    <div v-if="isLogin" class="basis-full lg:basis-[45%] xl:basis-[55%] ark-card ark-pro font-bold lg:text-left overflow-hidden">
       <div class="mt-1 pb-2 text-5xl flex flex-col">
         <span class="text-info text-2xl">托管日志</span>
-        <div class="overflow-hidden overflow-x-auto overflow-y-auto rounded max-h-96 mt-4">
+        <div class="overflow-auto rounded max-h-96 mt-4">
           <table class="min-w-full text-sm">
             <thead>
               <tr class="text-info text-left text-xl">
@@ -54,10 +54,10 @@
               </tr>
             </thead>
             <tbody>
-            <tr class="border-b border-opacity-20 border-primary h-12 text-xl" v-for="k in gameLog">
-              <td>{{ formatDate(k.ts, true) }}</td>
-              <td>{{ k.info }}</td>
-            </tr>
+              <tr class="border-b border-opacity-20 border-primary h-12 text-xl " v-for="k in gameLog">
+                <td>{{ formatDate(k.ts, true) }}</td>
+                <td>{{ k.info }}</td>
+              </tr>
             </tbody>
           </table>
         </div>
