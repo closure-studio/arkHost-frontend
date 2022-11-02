@@ -5,15 +5,16 @@ name: AutoUpdate
 
 on:
   push:
-    branches: [ "vue3" ]
+    branches: [ "AutoUpdate" ]
     paths-ignore: # 下列文件的变更不触发部署，可以自行添加
       - 'LICENSE'
       - '.gitignore'
       - 'README.md' 
       - 'version.info' 
+      - 'gameDataVersion'
   schedule:
     # Runs "At every 15th minute." (see https://crontab.guru)
-    - cron: '*/15 * * * *'
+    - cron: '*/1 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,6 +24,7 @@ jobs:
 
     - name: gamedata update
       run: |
+
         cd src/assets/data/
         rm -rf ArknightsGameData
         git clone https://github.com/Kengxxiao/ArknightsGameData
