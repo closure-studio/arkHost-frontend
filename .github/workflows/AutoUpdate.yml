@@ -14,7 +14,7 @@ on:
       - 'gameDataVersion'
   schedule:
     # Runs "At every 15th minute." (see https://crontab.guru)
-    - cron: '*/1 * * * *'
+    - cron: '*/5 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
