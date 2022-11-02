@@ -94,4 +94,6 @@ export const TableStage_ = () => load("stage_table");
 export const TableItems_ = () => load("item_table");
 export const TableItems = () => load("Items");
 
+export const adminResetPasswd = (account: string, password: string) =>
+    post(`System/Password/${account}/${password}`, {}); // ResetPasswd
 export const apiGeetestSet = (account: string, platform: number, params: any) => post(`Game/Captcha/${account}/${platform}`, params) // Geetest
