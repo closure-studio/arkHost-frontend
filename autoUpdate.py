@@ -40,8 +40,8 @@ if commitHash != latestCommitHash:
         
         
     # remove the old stage_table.json and item_table.json
-    #os.remove("stage_table.json")
-    #os.remove("item_table.json")
+    os.remove("stage_table.json")
+    os.remove("item_table.json")
         
 else:
     print("Already the latest version")

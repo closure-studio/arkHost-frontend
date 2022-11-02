@@ -12,7 +12,7 @@ fs.readFile("./stage_table.json", "utf8", (err, dataStr) => {
                     }
                 }
                 if (items.length > 0) {
-                    stageTable.value[k] = {
+                    stageTable[k] = {
                         name: data['stages'][k]['name'],
                         code: data['stages'][k]['code'],
                         ap: data['stages'][k]['apCost'],
