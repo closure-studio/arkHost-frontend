@@ -6,7 +6,7 @@ import urllib.request
 
 
 def qqbot(msg):
-    conn = http.client.HTTPSConnection("mc.mesord.com", 8098)
+    conn = http.client.HTTPConnection("mc.mesord.com", 8098)
     payload = json.dumps({
     "token": "ADMIN_TOKEN@FEXLI_2022",
     "msg": "【Action】" + msg,
@@ -33,7 +33,7 @@ file = open("gameDataHash", "r")
 commitHash = file.readline()
 
 # get the latest commit hash from https://api.github.com/repos/Kengxxiao/ArknightsGameData/git/refs/heads/master
-r = urllib.request.urlopen('http://api.github.com/repos/Kengxxiao/ArknightsGameData/git/refs/heads/master')
+r = urllib.request.urlopen('https://api.github.com/repos/Kengxxiao/ArknightsGameData/git/refs/heads/master')
 # convert to json
 latestCommitHash = json.loads(r.read().decode('utf-8'))["object"]["sha"]
 
