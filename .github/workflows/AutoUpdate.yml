@@ -11,6 +11,7 @@ on:
       - '.gitignore'
       - 'README.md' 
       - 'version.info' 
+      - 'gameDataVersion'
   schedule:
     # Runs "At every 15th minute." (see https://crontab.guru)
     - cron: '*/15 * * * *'
@@ -23,9 +24,7 @@ jobs:
 
     - name: gamedata update
       run: |
-        cd src/assets/data/
-        rm -rf ArknightsGameData
-        git clone https://github.com/Kengxxiao/ArknightsGameData
+        python3 autoUpdate.py
         
     - name: Auto Commit
       uses: stefanzweifel/git-auto-commit-action@v4
