@@ -38,7 +38,6 @@ interface Details {
             id: string
         },
         diamondShard: number,
-        exp: number,
         gachaTicket: number,
         gold: number,
         lastApAddTime: number,
@@ -74,6 +73,7 @@ interface Details {
         },
         squads: object,
     }
+    lastFreshTs: number
 }
 interface Log{
     info: string

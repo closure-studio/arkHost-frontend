@@ -9,14 +9,12 @@ export const router = createRouter({
       name: "",
       component: () => import("../views/Landing.vue"),
       meta: { title: "平台首页", noAuth: true },
-    },
-    {
+    },{
       path: "/Login",
       name: "Login",
       component: () => import("../views/Login.vue"),
       meta: { title: "账号登录", noAuth: true },
-    },
-    {
+    },{
       path: "/home",
       name: "home",
       component: () => import("../views/Home.vue"),
@@ -46,6 +44,11 @@ export const router = createRouter({
       name: "admin",
       component: () => import("../views/Admin.vue"),
       meta: { title: "后台管理"},
+    },{
+      path: "/dashboard/:account/:platform",
+      name: "dashboard",
+      component: () => import("../views/DashBoard.vue"),
+      meta: { title: "仓库统计V2"},
     }
   ],
 });

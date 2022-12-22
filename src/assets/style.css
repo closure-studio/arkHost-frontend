@@ -40,3 +40,6 @@ td, th {
 .ark-grid {
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr))
 }
+.ark-itemGrid {
+  grid-template-columns: repeat(auto-fill, minmax(4rem, 1fr))
+}

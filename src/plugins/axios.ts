@@ -88,7 +88,6 @@ export const apiGameDataUpdate = () => post("System/GameDataUpdate", {}); // Upd
 export const apiEditAnnounce = (params: any) =>
   post("System/Announcement", params); // EditAnnounce
 export const apiStatus = () => get("System/Status"); // Status
-
 export const TableStage = () => load("Stage");
 export const TableStage_ = () => load("stage_table");
 export const TableItems_ = () => load("item_table");
@@ -96,4 +95,7 @@ export const TableItems = () => load("Items");
 
 export const adminResetPasswd = (account: string, password: string) =>
     post(`System/Password/${account}/${password}`, {}); // ResetPasswd
+export const adminBan = (account: string, code: string) =>
+    post(`System/Account/Status/${account}/${code}`, {}); // Ban
 export const apiGeetestSet = (account: string, platform: number, params: any) => post(`Game/Captcha/${account}/${platform}`, params) // Geetest
+export const apiReqOCR = (account: string, platform: string) => post(`Game/Ocr/${account}/${platform}`, {}) // OCR
