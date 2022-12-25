@@ -33,9 +33,12 @@ file = open("gameDataHash", "r")
 commitHash = file.readline()
 
 # get the latest commit hash from https://api.github.com/repos/Kengxxiao/ArknightsGameData/git/refs/heads/master
-r = urllib.request.urlopen('https://api.github.com/repos/Kengxxiao/ArknightsGameData/git/refs/heads/master')
-# convert to json
-latestCommitHash = json.loads(r.read().decode('utf-8'))["object"]["sha"]
+url = "https://api.github.com/repos/Kengxxiao/ArknightsGameData/git/refs/heads/master"
+hdr = { "Authorization" : "Bearer "+ str(sys.argv[2]),"accept": "application/vnd.github+json" }
+
+req = urllib.request.Request(url, headers=hdr)
+response = urllib.request.urlopen(req)
+latestCommitHash = json.loads(response.read().decode('utf-8'))["object"]["sha"]
 
 if commitHash != latestCommitHash:
     pass
