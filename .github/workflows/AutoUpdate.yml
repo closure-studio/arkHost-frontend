@@ -24,7 +24,7 @@ jobs:
 
     - name: gamedata update
       run: |
-        python3 autoUpdate.py
+        python3 autoUpdate.py ${{ secrets.QQBOTTOKEN }}
         
     - name: Auto Commit
       uses: stefanzweifel/git-auto-commit-action@v4
