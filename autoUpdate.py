@@ -3,12 +3,12 @@ import http
 import json
 import os
 import urllib.request
-
+import sys
 
 def qqbot(msg):
     conn = http.client.HTTPConnection("mc.mesord.com", 8098)
     payload = json.dumps({
-    "token": "ADMIN_TOKEN@FEXLI_2022",
+    "token": str(sys.argv[1]),
     "msg": "【Action】" + msg,
     "uid": 913468406,
     "toImg": False
