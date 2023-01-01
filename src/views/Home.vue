@@ -115,7 +115,7 @@ const showDel = ref<boolean[]>([])
 apiAnnounce().then((res: any) => {
   load.value = false
   if (res.code) {
-    ann.value = res.data.announcement
+    ann.value = res.data["announcement"]
   } else {
     createToast('读取公告失败', {
       showIcon: true,
