@@ -59,7 +59,7 @@
               <tr class="border-b border-opacity-20 border-primary h-12 text-xl"
                   v-for="k in gameLog"
                   :class="{
-                    'text-info': k.info.includes('高星提醒'),
+                    'text-info': k.info.includes('高星提醒') || k.info.includes('[6★]'),
                     'text-primary': k.info.includes('战斗开启成功'),
                     'text-success': k.info.includes('获得物品') || k.info.includes('完成')
                   }">
@@ -76,7 +76,7 @@
         <span class="text-info text-2xl">不实时截图</span>
         <div class="carousel w-full mt-2">
           <div :id="'screen_' + (v + 1)" class="carousel-item relative w-full" v-for="(k, v) in screenshots">
-            <img :src="'https://screenshot.dzp.me/' + k" class="w-full" />
+            <img :src="'https://screenshot.dzp.me/' + k" class="w-full" alt="screen"/>
           </div>
         </div>
         <div class="flex justify-center w-full pt-3 gap-3">
