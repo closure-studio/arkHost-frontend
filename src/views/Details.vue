@@ -56,7 +56,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="border-b border-opacity-20 border-primary h-12 text-xl " v-for="k in gameLog">
+              <tr class="border-b border-opacity-20 border-primary h-12 text-xl"
+                  v-for="k in gameLog"
+                  :class="{
+                    'text-info': k.info.includes('高星提醒'),
+                    'text-primary': k.info.includes('战斗开启成功'),
+                    'text-success': k.info.includes('获得物品') || k.info.includes('完成')
+                  }">
                 <td>{{ formatDate(k.ts, true) }}</td>
                 <td>{{ k.info }}</td>
               </tr>
