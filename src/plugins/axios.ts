@@ -3,6 +3,51 @@ import { createToast } from "mosha-vue-toastify";
 import { userStore } from "../store/user";
 import { useRouter } from "vue-router";
 
+function FindBetterHost() {
+  // define a array to store the host
+  const apiHost = {
+    'https://api-a.arknights.host': -1,
+    'https://api-b.arknights.host': -1,
+    'https://api-c.arknights.host': -1,
+    `https://devapi.arknights.host`:-1,
+  }
+const path = '/Nodes';
+const promiseArray = [];
+
+// go through the apiHost, apiHost is dict
+for (let key in apiHost) {
+  // using axios and async to get the data
+  const ping = async (url) => {
+    try {
+      let startTime = Date.now();
+      const response = await axios.get(url + path, { timeout: 2000 });
+      apiHost[url] = Date.now() - startTime;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // push the promise to promiseArray
+  promiseArray.push(ping(key));
+}
+Promise.all(promiseArray).then(() => {
+  // go through the apiHost, apiHost is dict
+  // find the fastest host, ignore the host which is -1
+  let fastestHost = '';
+  let fastestTime = 999999;
+  for (let key in apiHost) {
+    if (apiHost[key] != -1 && apiHost[key] < fastestTime) {
+      fastestHost = key;
+      fastestTime = apiHost[key];
+    }
+  }
+  // if the fastestHost is not empty, set the host to localStorage
+  if (fastestHost != '') {
+    localStorage.setItem('host', fastestHost);
+  }
+});
+}
+FindBetterHost()
+
 const service = axios.create({
   baseURL: localStorage.getItem('host') || "https://devapi.arknights.host/",
 });
@@ -19,7 +64,7 @@ service.interceptors.response.use(
       });
       userStore().logout();
       const router = useRouter();
-      router.push({ path: "/login" }).catch(() => {});
+      router.push({ path: "/login" }).catch(() => { });
       return;
     }
     createToast("网络故障，请稍后重试", {
@@ -94,8 +139,8 @@ export const TableItems_ = () => load("item_table");
 export const TableItems = () => load("Items");
 
 export const adminResetPasswd = (account: string, password: string) =>
-    post(`System/Password/${account}/${password}`, {}); // ResetPasswd
+  post(`System/Password/${account}/${password}`, {}); // ResetPasswd
 export const adminBan = (account: string, code: string) =>
-    post(`System/Account/Status/${account}/${code}`, {}); // Ban
+  post(`System/Account/Status/${account}/${code}`, {}); // Ban
 export const apiGeetestSet = (account: string, platform: number, params: any) => post(`Game/Captcha/${account}/${platform}`, params) // Geetest
 export const apiReqOCR = (account: string, platform: string) => post(`Game/Ocr/${account}/${platform}`, {}) // OCR
