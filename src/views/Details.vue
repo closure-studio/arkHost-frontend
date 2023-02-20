@@ -104,7 +104,7 @@
               是否基建排班<input type="checkbox" class="toggle" checked v-model="config.enableBuildingArrange" />
             </span>
             <span class="flex justify-between w-full text-info">
-              招募支援机械<input type="checkbox" class="toggle" checked v-model="config.recruitIgnoreRobot" />
+              忽略招募支援机械<input type="checkbox" class="toggle" checked v-model="config.recruitIgnoreRobot" />
             </span>
             <span class="flex justify-between w-full text-info">
               是否托管战斗<input type="checkbox" class="toggle" checked v-model="config.isAutoBattle" />
