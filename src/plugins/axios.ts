@@ -5,11 +5,12 @@ import { useRouter } from "vue-router";
 
 function FindBetterHost() {
   // define a array to store the host
-  const apiHost = {
+
+  const apiHost : { [key: string]: number } = {
     'https://api-a.arknights.host': -1,
     'https://api-b.arknights.host': -1,
     'https://api-c.arknights.host': -1,
-    `https://devapi.arknights.host`:-1,
+    'https://devapi.arknights.host':-1,
   }
 const path = '/Nodes';
 const promiseArray = [];
@@ -17,7 +18,7 @@ const promiseArray = [];
 // go through the apiHost, apiHost is dict
 for (let key in apiHost) {
   // using axios and async to get the data
-  const ping = async (url) => {
+  const ping = async (url: string) => {
     try {
       let startTime = Date.now();
       const response = await axios.get(url + path, { timeout: 2000 });
