@@ -109,7 +109,7 @@ export const apiRegister = (params: any) => post("Auth", params); // Register
 export const apiLogin = (params: string) => get(`Auth/${params}`); // Login
 export const apiReLogin = (token: string) => get(`Auth/${token}`); // ReLogin
 export const apiCron = () => get("Nodes"); // Cron
-export const apiAnnounce = () => get("System/Announcement"); // Announce
+export const apiAnnounce = () => get("Common/Announcement"); // Announce
 export const apiAddGame = (params: any) => post("Game", params); // GameCreate
 export const apiGameLogin = (params: any) => post("Game/Login", params); // GameLogin
 export const apiGameLog = (account: string, platform: string) => get(`Game/Log/${account}/${platform}/0`); // GameLog
@@ -132,7 +132,7 @@ export const apiGetMapList = () => get("System/Maps"); // GetMapList
 export const apiGetLog = () => get("System/LogFile"); // GetLog
 export const apiGameDataUpdate = () => post("System/GameDataUpdate", {}); // UpdateData
 export const apiEditAnnounce = (params: any) =>
-  post("System/Announcement", params); // EditAnnounce
+  post("Common/Announcement", params); // EditAnnounce
 export const apiStatus = () => get("System/Status"); // Status
 export const TableStage = () => load("Stage");
 export const TableStage_ = () => load("stage_table");
