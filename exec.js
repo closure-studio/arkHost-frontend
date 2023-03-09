@@ -11,7 +11,7 @@ fs.readFile("./stage_table.json", "utf8", (err, dataStr) => {
                         items.push(item['id'])
                     }
                 }
-                if (items.length > 0 || k.includes('act24side_08')) {
+                if (items.length > 0 || k.includes('act24side')) {
                     stageTable[k] = {
                         name: data['stages'][k]['name'],
                         code: data['stages'][k]['code'],
