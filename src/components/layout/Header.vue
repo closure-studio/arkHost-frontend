@@ -44,7 +44,8 @@
           </div>
         </label>
         <div tabindex="0" class="mt-2 p-3 shadow-lg dropdown-content bg-base-300 rounded-md text-system w-52 flex flex-col ">
-          <button class="btn btn-block btn-primary" @click="logout">退出登录</button>
+          <router-link to="/account" class="btn btn-block btn-primary">账号认证</router-link>
+          <button class="btn btn-block btn-primary mt-2" @click="logout">退出登录</button>
         </div>
       </div>
     </div>

@@ -37,9 +37,12 @@
       <div class="mt-1 pb-2 text-5xl flex flex-col">
         <span class="text-info text-2xl">拓展面板</span>
         <div class="mt-2 grid-cols-2 md:grid-cols-4 lg:grid-cols-2 2xl:grid-cols-4 grid gap-4">
-          <button class="btn btn-primary btn-outline btn-block h-28 text-3xl rounded-none">编队</button>
-          <router-link :to="`/dashboard/${_account}/${_platform}`" class="btn btn-primary btn-outline btn-block h-28 text-3xl rounded-none">
+          <button class="btn btn-primary btn-outline btn-block h-16 text-3xl rounded-none">编队</button>
+          <router-link :to="`/dashboard/${_account}/${_platform}`" class="btn btn-primary btn-outline btn-block h-16 text-3xl rounded-none">
             仓库
+          </router-link>
+          <router-link :to="`/account`" class="btn btn-primary btn-outline btn-block h-16 text-3xl rounded-none">
+            认证
           </router-link>
         </div>
       </div>

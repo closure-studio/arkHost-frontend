@@ -145,3 +145,5 @@ export const adminBan = (account: string, code: string) =>
   post(`System/Account/Status/${account}/${code}`, {}); // Ban
 export const apiGeetestSet = (account: string, platform: number, params: any) => post(`Game/Captcha/${account}/${platform}`, params) // Geetest
 export const apiReqOCR = (account: string, platform: string) => post(`Game/Ocr/${account}/${platform}`, {}) // OCR
+export const apiBingQQ = () => get('Auth/QQBind') // 绑定 QQ
+

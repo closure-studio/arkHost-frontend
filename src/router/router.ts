@@ -49,6 +49,11 @@ export const router = createRouter({
       name: "dashboard",
       component: () => import("../views/DashBoard.vue"),
       meta: { title: "仓库统计V2"},
+    },{
+      path: "/account",
+      name: "account",
+      component: () => import("../views/Account.vue"),
+      meta: { title: "账号认证"},
     }
   ],
 });
