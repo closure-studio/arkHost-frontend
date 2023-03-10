@@ -27,19 +27,30 @@
   const code = ref('')
   const ts = ref(0)
   apiBingQQ().then((res: any) => {
-    if (res.code === 0) {
+    if (res.code === 0){
+      code.value = res.message
+      createToast(res.message, {
+        showIcon: true,
+        type: "error",
+        transition: "bounce",
+      });
+    }
+
+    if (res.code === 1) {
+      code.value = res?.data?.verifyCode
+      ts.value = res?.data?.expireTimestamp - Math.ceil(Date.now() / 1000)
+      setInterval(() => {
+        ts.value--
+      }, 1000)
+    }
+
+    if (res.code === 2) {
       code.value = "你已绑定 QQ"
       createToast("你已绑定 QQ", {
         showIcon: true,
         type: "success",
         transition: "bounce",
       });
-    } else {
-      code.value = res?.data?.verifyCode
-      ts.value = res?.data?.expireTimestamp - Math.ceil(Date.now() / 1000)
-      setInterval(() => {
-        ts.value--
-      }, 1000)
     }
   })
 
