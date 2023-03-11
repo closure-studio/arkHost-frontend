@@ -45,7 +45,7 @@
     }
 
     if (res.code === 2) {
-      code.value = "你已绑定 QQ"
+      code.value = "你已绑定 QQ账号 : " + res.data
       createToast("你已绑定 QQ", {
         showIcon: true,
         type: "success",
