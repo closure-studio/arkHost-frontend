@@ -80,12 +80,15 @@ const { data, error, isLoading, getData } = useVisitorData(
 
 watch(data, (currentData) => {
   if (currentData) {
+    if currentData.confidence.score > 0.7{
+      instance.appContext.config.globalProperties.$axios.defaults.headers["VisitorId"] = currentData.visitorId
+    }
     // Do something with the data
     console.log(currentData);
   }
 });
 
-getData();
+async getData();
 
 if (user.value.isLogin) {
   load.value = true;

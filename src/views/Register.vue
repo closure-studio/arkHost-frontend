@@ -48,13 +48,33 @@
 </template>
 <script setup>
 import {apiLogin, apiRegister, apiReLogin} from "../plugins/axios";
-import { getCurrentInstance, ref } from "vue";
+import { getCurrentInstance, ref,watch } from "vue";
 import { createToast } from "mosha-vue-toastify";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "../store/user";
 import Loading from "../components/loading.vue";
 import { validate } from "../plugins/function";
 import { storeToRefs } from "pinia/dist/pinia";
+import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-vue-v3';
+
+
+const { data, error, isLoading, getData } = useVisitorData(
+  { extendedResult: true },
+  // Set to true to fetch data on mount
+  { immediate: false }
+);
+watch(data, (currentData) => {
+  if (currentData) {
+    if currentData.confidence.score > 0.7{
+      instance.appContext.config.globalProperties.$axios.defaults.headers["VisitorId"] = currentData.visitorId
+    }
+    // Do something with the data
+    console.log(currentData);
+  }
+});
+
+async getData();
+
 
 const reg = ref({
   email: '',
