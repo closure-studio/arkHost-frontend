@@ -73,7 +73,7 @@ watch(data, (currentData) => {
   }
 });
 
-async getData();
+getData();
 
 
 const reg = ref({

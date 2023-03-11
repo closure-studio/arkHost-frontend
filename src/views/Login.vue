@@ -88,7 +88,7 @@ watch(data, (currentData) => {
   }
 });
 
-async getData();
+getData();
 
 if (user.value.isLogin) {
   load.value = true;
