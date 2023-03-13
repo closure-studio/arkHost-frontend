@@ -125,18 +125,13 @@ apiAnnounce().then((res: any) => {
   }
 })
 const getList = () => {
-  apiListGame().then((res: any) => {
-    list.value = res.data
-    // 状态更新轮询
-    for (let k of list.value) {
-      if (k.status.code === 1) {
-        setTimeout(() => {
-          getList()
-        }, 1000)
-      }
-    }
-  })
+  setTimeout(() => {
+    apiListGame().then((res: any) => {
+      list.value = res.data
+      })
+  }, 5000)
 }
+
 getList()
 const _plat = ref('官服')
 const platform = ['官服', 'B服']
@@ -217,7 +212,7 @@ const pause = (data: GameInfo) => {
 const run = (data: GameInfo) => {
   apiGameLogin(data.config).then((res: any) => {
     if (res.code === 1){
-      getList()
+      //getList()
       createToast('登录成功', {
         showIcon: true,
         type: 'success',
@@ -271,7 +266,7 @@ const captcha = (data: GameInfo) => {
         geetest_validate: validate.geetest_validate,
         success: true
       }).then(() => {
-        getList()
+        //getList()
       })
       captchaObj.destroy(); // 这里是销毁实例，处理完逻辑最终销毁
     })
@@ -298,7 +293,7 @@ const login = () => {
         type: 'success',
         transition: 'bounce',
       })
-      getList()
+      //getList()
     } else {
       createToast('添加失败', {
         showIcon: true,
