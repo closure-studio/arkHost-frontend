@@ -98,9 +98,7 @@ if (user.value.isLogin) {
         transition: "bounce",
       });
       _user.login(resp.data.token);
-      instance.appContext.config.globalProperties.$axios.defaults.headers[
-        "Authorization"
-      ] = resp.data.token;
+      instance.appContext.config.globalProperties.$axios.defaults.headers["Authorization"] = resp.data.token;
       router.push(route.query.redirect ? route.query.redirect : "/home");
       return;
     }
@@ -141,9 +139,7 @@ const login = () => {
           transition: "bounce",
         });
         _user.login(resp.data.token);
-        instance.appContext.config.globalProperties.$axios.defaults.headers[
-          "Authorization"
-        ] = resp.data.token;
+        instance.appContext.config.globalProperties.$axios.defaults.headers["Authorization"] = resp.data.token;
         router.push(route.query.redirect ? route.query.redirect : "/home");
         return;
       }
