@@ -86,7 +86,7 @@ watch(data, (currentData) => {
   }
 });
 
-getData();
+
 
 if (user.value.isLogin) {
   load.value = true;
@@ -113,6 +113,7 @@ if (user.value.isLogin) {
 }
 
 const login = () => {
+  getData();
   load.value = true;
   if (!validate(email.value, password.value)) {
     load.value = false;
