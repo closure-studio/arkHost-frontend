@@ -125,7 +125,7 @@ apiAnnounce().then((res: any) => {
   }
 })
 const getList = () => {
-  setinterval(() => {
+  setInterval(() => {
     apiListGame().then((res: any) => {
       list.value = res.data
       })
