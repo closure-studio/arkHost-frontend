@@ -1,5 +1,5 @@
 const fs = require("fs")
-fs.readFile("./stage_table.json", "utf8", (err, dataStr) => {
+fs.readFile("./StageTable.json", "utf8", (err, dataStr) => {
     const data = JSON.parse(dataStr)
     const stageTable = {}
     for (let k in data['stages']) {
@@ -30,7 +30,7 @@ fs.readFile("./stage_table.json", "utf8", (err, dataStr) => {
     })
 })
 
-fs.readFile("./item_table.json", "utf8", (err, dataStr) => {
+/* fs.readFile("./item_table.json", "utf8", (err, dataStr) => {
     const data = JSON.parse(dataStr)
     const items = {}
     for (let k in data['items']) {
@@ -45,4 +45,4 @@ fs.readFile("./item_table.json", "utf8", (err, dataStr) => {
             console.log(err)
         }
     })
-})
+}) */
