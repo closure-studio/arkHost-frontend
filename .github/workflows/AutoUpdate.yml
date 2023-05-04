@@ -5,16 +5,16 @@ name: AutoUpdate
 
 on:
   push:
-    branches: [ "vue3" ]
+    branches: [ "vue33" ]
     paths-ignore: # 下列文件的变更不触发部署，可以自行添加
       - 'LICENSE'
       - '.gitignore'
       - 'README.md' 
       - 'version.info' 
       - 'gameDataVersion'
-  #schedule:
+  schedule:
     # Runs "At every 5 minute." (see https://crontab.guru)
-    #- cron: '*/5 * * * *'
+    - cron: '*/5 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
