@@ -10,7 +10,7 @@ def qqbot(msg):
     payload = json.dumps({
     "token": str(sys.argv[1]),
     "msg": "【Action】" + msg,
-    "uid": 913468406,
+    "uid": sys.argv[3],
     "toImg": False
     })
     headers = {
