@@ -30,7 +30,7 @@ fs.readFile("./StageTable.json", "utf8", (err, dataStr) => {
     })
 })
 
-/* fs.readFile("./item_table.json", "utf8", (err, dataStr) => {
+fs.readFile("./item_table.json", "utf8", (err, dataStr) => {
     const data = JSON.parse(dataStr)
     const items = {}
     for (let k in data['items']) {
@@ -45,4 +45,4 @@ fs.readFile("./StageTable.json", "utf8", (err, dataStr) => {
             console.log(err)
         }
     })
-}) */
+})
