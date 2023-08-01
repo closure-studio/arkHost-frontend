@@ -1,5 +1,5 @@
 const fs = require("fs")
-fs.readFile("./StageTable.json", "utf8", (err, dataStr) => {
+fs.readFile("./stage_table.json", "utf8", (err, dataStr) => {
     const data = JSON.parse(dataStr)
     const stageTable = {}
     for (let k in data['stages']) {
