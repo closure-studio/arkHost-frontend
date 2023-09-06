@@ -4,9 +4,7 @@
   >
     <loading v-if="load">
       <div class="flex items-center justify-center">
-        <div
-          class="w-16 h-16 border-4 border-dashed rounded-full animate-spin-slow border-info"
-        />
+        <div class="w-16 h-16 border-4 border-dashed rounded-full animate-spin-slow border-info"/>
       </div>
     </loading>
     <div class="p-6 sm:p-10">
@@ -34,9 +32,7 @@
               placeholder="请输入密码"
               class="ark-input mb-2"
             />
-            没有账号？<router-link to="/register" class="text-primary"
-              >点击注册</router-link
-            >
+            没有账号？<router-link to="/register" class="text-primary">点击注册</router-link>
           </div>
         </div>
         <div class="space-y-2">
@@ -53,14 +49,14 @@
 </template>
 <script setup>
 import { apiLogin, apiReLogin } from "../plugins/axios";
-import { getCurrentInstance, ref,watch } from "vue";
+import { getCurrentInstance, ref } from "vue";
 import { createToast } from "mosha-vue-toastify";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "../store/user";
 import Loading from "../components/loading.vue";
 import { validate } from "../plugins/function";
 import { storeToRefs } from "pinia/dist/pinia";
-import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-vue-v3';
+
 const email = ref("");
 const password = ref("");
 const load = ref(false);
@@ -70,23 +66,6 @@ const route = useRoute();
 const _user = userStore();
 const instance = getCurrentInstance();
 const { user } = storeToRefs(_user);
-
-
-const { data, error, isLoading, getData } = useVisitorData(
-  { extendedResult: true },
-  // Set to true to fetch data on mount
-  { immediate: false }
-);
-
-watch(data, (currentData) => {
-  if (currentData) {
-    if (currentData.confidence.score > 0.7 ){
-      instance.appContext.config.globalProperties.$axios.defaults.headers["VisitorId"] = currentData.visitorId
-    }
-  }
-});
-
-
 
 if (user.value.isLogin) {
   load.value = true;
@@ -98,8 +77,9 @@ if (user.value.isLogin) {
         transition: "bounce",
       });
       _user.login(resp.data.token);
-      console.log(resp.data.token);
-      instance.appContext.config.globalProperties.$axios.defaults.headers["Authorization"] = resp.data.token;
+      instance.appContext.config.globalProperties.$axios.defaults.headers[
+        "Authorization"
+      ] = resp.data.token;
       router.push(route.query.redirect ? route.query.redirect : "/home");
       return;
     }
@@ -113,7 +93,6 @@ if (user.value.isLogin) {
 }
 
 const login = () => {
-  getData();
   load.value = true;
   if (!validate(email.value, password.value)) {
     load.value = false;
@@ -131,27 +110,26 @@ const login = () => {
     transition: "bounce",
     timeout: 1500,
   });
-  apiLogin(`${email.value}/${encodeURIComponent(password.value)}`).then(
-    (resp) => {
-      load.value = false;
-      if (resp.code) {
-        createToast("登录成功，欢迎来到可露希尔的午夜商超", {
-          showIcon: true,
-          type: "success",
-          transition: "bounce",
-        });
-        _user.login(resp.data.token);
-        console.log(resp.data);
-        instance.appContext.config.globalProperties.$axios.defaults.headers["Authorization"] = resp.data.token;
-        router.push(route.query.redirect ? route.query.redirect : "/home");
-        return;
-      }
-      createToast("错误的登录信息：" + resp.message, {
+  apiLogin(`${email.value}/${encodeURIComponent(password.value)}`).then((resp) => {
+    load.value = false;
+    if (resp.code) {
+      createToast("登录成功，欢迎来到可露希尔的午夜商超", {
         showIcon: true,
-        type: "info",
+        type: "success",
         transition: "bounce",
       });
+      _user.login(resp.data.token);
+      instance.appContext.config.globalProperties.$axios.defaults.headers[
+        "Authorization"
+      ] = resp.data.token;
+      router.push(route.query.redirect ? route.query.redirect : "/home");
+      return;
     }
-  );
+    createToast("错误的登录信息：" + resp.message, {
+      showIcon: true,
+      type: "info",
+      transition: "bounce",
+    });
+  });
 };
 </script>
